@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8"/>
+    <title>云钱包运营网站</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/dist/css/AdminLTE.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/dist/css/skins/skin-blue-light.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css"/>
+    <link rel="stylesheet"
+          href="js/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/plugins/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
+
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon"/>
+    <script type="text/javascript" src="js/lib/requirejs/require.js" data-main="js/require-config.js"></script>
+	<!-- jQuery 2.2.3 -->
+	<script type="text/javascript" src="./jQuery/jquery-2.2.3.min.js"></script>
+	<script th:inline="javascript">
+	 $(document).ready(function(){ 
+		 
+	 }); 
+	</script>
+	<style type="text/css">
+	  .checkbox{ vertical-align:middle; margin:auto 0px auto 20px;height:10px; padding:0px; float:left;}
+	</style>
+</head>
+<body class="hold-transition register-page" style="height: 700px">
+<div class="register-box">
+    <div class="register-logo">
+		<a href="./website/index"><img src="image/201_42px.png" style="padding-bottom: 5px;" /></a>
+    </div>
+
+    <div class="register-box-body" style="height: 220px">
+        <p id="msg" style=" font-size: large; text-align: center;">
+             <a>感谢您注册维金云支付</a>
+        </p>
+        <form id="reg_success" method="post" action="./website/index">
+            <div class="form-group has-feedback">
+                <p style="font-size: 13px; padding: 24px" >验证邮件已发送至您的邮箱，请登录邮箱点击邮件中的链接进行激活。</p>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button id="regBtn" type="submit" class="btn btn-primary btn-block btn-flat">回到首页</button>
+                </div>
+            </div>
+        </form>
+        <div class="social-auth-links text-center">
+        </div>
+    </div>
+</div>
+</body>
+</html>

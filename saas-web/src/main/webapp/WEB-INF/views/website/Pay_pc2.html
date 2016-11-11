@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/index.css" rel="stylesheet"/>
+    <title>维金云支付</title>
+</head>
+<body>
+<div class="mask" style="display: none;"></div>
+<div class="Popup" style="display: none;">
+    <br><br>
+    <div class="title"><label id="labelChannel"></label> 二维码支付</div>
+    <div id="qrcodeImg" class="con">
+        <iframe id="aliCode" style="display: none; height:280px; width:320px; border: none; padding-right: 20px;"></iframe>
+    </div>
+    <input type="button" class="button" id="btnGotoIndex" style="display: none;" value="回到首页">
+</div>
+
+<div class="head">维金云商城</div>
+<div class="Pay_pc2_price">
+    <div class="left">
+        <span>订单号：<label id="instOrderNo"></label></span>
+        <p>维金空气净化器 -- 支付体验</p>
+    </div>
+    <div class="right">应付金额：<span id="price"></span>元</div>
+</div>
+
+<div class="Pay_pc2_channel">
+    <div class="title">手机支付</div>
+    <div class="B">
+        <ul>
+            <li>
+                <input type="radio" id="ALIPAY" name="channel" class="payment-check" value="ALIPAY">
+                <i class="payment-icon"><img src="image/pay_pc1_5.png"></i>
+                <span id="ALIPAY-SPAN" class="payment-way">支付宝</span>
+            </li>
+            <li>
+                <input type="radio" id="WXPAY" name="channel" class="payment-check" value="WXPAY">
+                <i class="payment-icon"><img src="image/pay_pc1_4.png"></i>
+                <span id="WXPAY-SPAN" class="payment-way">微信</span>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <input type="button" id="btnPay" class="Pay_pc2_button" value="支付">
+        <input type="button" id="btnBack" class="Pay_pc2_button" value="返回">
+    </div>
+</div>
+
+<script type='text/javascript' src='js/jquery-1.12.1.min.js'></script>
+<script>
+    var price;
+    var channel;
+    var instOrderNo;
+    var backendUrl;
+
+    $(function () {
+        instOrderNo = request("instOrderNo");
+        $("#instOrderNo").html(instOrderNo);
+        var num = parseInt(request("num"));
+        if (!num)
+            num = 1;
+        price = (num * 0.01).toFixed(2);
+        $("#price").html(price);
+
+        getGatewayRootUrl();
+    });
+
+    function getGatewayRootUrl() {
+        var url = "getGatewayRootUrl";
+        $.getJSON(url, function(result){
+            backendUrl = result.url;
+        });
+    }
+
+    function request(strParame) {
+        var args = new Object();
+        var query = location.search.substring(1);
+        var pairs = query.split("&");
+        for (var i = 0; i < pairs.length; i++) {
+            var pos = pairs[i].indexOf('=');
+            if (pos == -1) continue;
+            var argname = pairs[i].substring(0, pos);
+            var value = pairs[i].substring(pos + 1);
+            value = decodeURIComponent(value);
+            args[argname] = value;
+        }
+        return args[strParame];
+    }
+
+    var times = 5;
+    function queryStatus() {
+        if (times < 1) {
+            $("#btnGotoIndex").show();
+            return;
+        }
+        times--;
+        setTimeout(queryStatus, 10000);
+
+        var url = backendUrl + "/gateway-pay/vfinance/queryStatus?callback=?";
+        $.getJSON(url, {
+            'queryUrl': backendUrl + '/gateway-pay/vfinance/trade_query',
+            'appKey': '100120160907100010',
+            'channelCode': channel,
+            'instOrderNo': instOrderNo,
+            'toRSA': 'e74+qRWvOKKsXgCwZ0P4vXHgpNB9Z9SBZSHKZqc2MMSxqeM2ByOOewIMhtqc1bRCTnW/ajc+WtHRZDk6Jr/  KvvfjnnJuETaxGVgK5d2GjLoAlZm2/  dF2TXF2bcvS2/HC9zKfbmbkNamf3Zf9bTj8GM9CX9wqPVpDZ1+W+B+o/Q8='
+        }, function (json) {
+            json = eval('(' + json + ')');
+            if (!json.success) {
+                alert(json.error);
+                return;
+            }
+            var tradeStatus = json.tradeStates;
+            if (tradeStatus == '0002') {
+                alert('支付失败');
+                gotoPayHtml();
+            } else if (tradeStatus == '0005') {
+                alert('支付成功');
+                gotoPayHtml();
+            } else if (tradeStatus == '0003') {
+                console.log('等待支付');
+            }
+        });
+    }
+
+    $("#btnGotoIndex, #btnBack").bind("click", function () {
+        gotoPayHtml();
+    });
+
+    $("#btnPay").bind("click", function () {
+        channel = $("input[name='channel']:checked").val();
+        if (!channel) {
+            alert("请选择支付渠道");
+            return;
+        }
+        pay();
+        $("#labelChannel").html($("#" + channel + "-SPAN").html());
+        $(".mask, .Popup").show();
+    });
+
+    function pay() {
+
+        var date = new Date();
+        createTime = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+
+        var url = backendUrl + "/gateway-pay/vfinance/test_Pay4Img" +
+                "?createTime=" + createTime +
+                "&instOrderNo=" + instOrderNo +
+                "&appKey=100120160907100010" +
+                "&channelCode=" + channel +
+                "&amount=" + price +
+                "&proSubject=%E4%BA%A7%E5%93%811" +
+                "&proDesc=%E6%9C%AC%E4%BA%A4%E6%98%93%E7%94%B1%E7%BB%B4%E9%87%91%E6%8F%90%E4%BE%9B%E9%80%9A%E9%81%93%E6%9C%8D%E5%8A%A1" +
+                "&toRSA=pSui1J4cLA5MmPiX27hInCfjwJvO5bcp4QhaC3Wz33s34Anx/9IVIF6cjw28TYh08ivRX2WZO1H14dvjIZ2HWeUOtvzQn+zdr+HVlDDKbDzB6gLQZs8aOh8etr+IWtoHZIotZcCD7zWHqRZovSc0OyBtLSSavtOcy+B8D2cFVfk=" +
+                "&callback=?";
+
+        $.getJSON(url, function (json) {
+            if (channel=='ALIPAY') {
+                $("#aliCode").attr("src", json).show();
+            } else {
+                $("#qrcodeImg").html(json);
+            }
+            queryStatus();
+        });
+    }
+
+    function gotoPayHtml() {
+        window.location = "payPc1";
+    }
+</script>
+</body>
+</html>

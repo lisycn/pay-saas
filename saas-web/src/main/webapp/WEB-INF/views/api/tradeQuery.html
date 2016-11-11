@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="shortcut icon" type="image/x-icon" href="image/favicon.ico" media="screen" />
+<title>维金云支付</title>
+<meta name="keywords" content="维金云钱包，互联网金融，支付清结算，支付接口，移动支付系统，移动支付方案，医疗支付系统，金融支付系统"/>
+<meta name="description" content="维金云钱包提供支付收款（全渠道、全场景）、付款、资金清结算、对账、账户和用户钱包，维金作为互联网金融基础设施供应商,致力于协助有意参与互联网金融业务的企业客户，为其建立云钱包（电子钱包、移动钱包）、支付、清结算系统，消费金融系统，供应链金融系统，打造适合新经济的互联网金融服务"/>
+<base href="."/>
+<link href="website/css/index.css" rel="stylesheet"/>
+<link href="website/css/style.css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="https://www.vfnetwork.cn/open-static/saasucenter/css/opendoclist.css" />
+<link rel="stylesheet" type="text/css" href="https://www.vfnetwork.cn/open-static/ucenter/css/syntaxhighlighter/shCoreDefault.css" />
+<link href="https://www.vfnetwork.cn/open-static/ucenter/css/dialog.css" rel="stylesheet" />
+<style type="text/css">
+/* 和公共content样式有冲突,目前内嵌解决，防止common。css被替换*/
+.content {
+	width: 1000px;
+	padding-top: 78px;
+}
+/*头部*/
+.header{ background:#fff; width:100%; height:72px; box-shadow:0 0 5px 0px #ccc ;}
+.fudong{ top:0px; position:fixed;  z-index:100}
+#top{ width:1200px; margin:0 auto;}
+.logo{ float:left; padding-top:13px; padding-right:206px;}
+/*导航*/
+.nav {float:left; padding-top:12px;}
+.nav .mainlevel { float:left; width:120px; line-height:60px; font-size:16px;/*IE6 only*/}
+.nav .mainlevel a {color:#333; text-decoration:none; display:block; padding:0 0px; width:120px; text-align:center;}
+.nav .mainlevel a:hover, nav .mainlevel a.active{color:#4b98ff; text-decoration:none;}
+
+.nav .mainlevel ul {display:none; position:absolute; padding-top:1px;}
+.nav .mainlevel li { background:rgba(255,255,255,0.9); line-height:38px; padding-bottom:2px; text-align:center; width:120px;/*IE6 only*/}
+.log {text-align:center; color:skyblue; line-height:24px; text-transform:capitalize; margin:50px auto;}
+
+.login{ float:right; line-height:62px; padding-top:10px; font-size:14px; color:#CCCCCC;}
+.login .button a{padding:3px 18px; background:#4b98ff; color:#fff; border-radius:4px;}
+.login .button a:hover{ background:#3a85e9; color:#fff;}
+.login a{color:#4b98ff; padding:0px 10px;}
+.login a:hover{color:#3a85e9;}
+.login1{ float:right; line-height:62px; padding-top:10px; font-size:14px; color:#4b98ff;}
+.login1 a{color:#4b98ff; padding:0px 10px;}
+.login1 a:hover{color:#3a85e9; text-decoration: underline;}
+</style>
+<script src="https://www.vfnetwork.cn/open-static/saasucenter/js/jquery-1.8.3.min.js"></script>
+<script src="https://www.vfnetwork.cn/open-static/saasucenter/js/jquery-ui-1.9.2.min.js"></script>
+<script src="https://www.vfnetwork.cn/open-static/saasucenter/js/dialog.js"></script>
+<script src="https://www.vfnetwork.cn/open-static/saasucenter/js/bootstrap.min.js"></script>
+<script src="website/js/slide.js"></script>
+<script src="website/js/js-myjs.js"></script>
+</head>
+<body>
+
+<div class="header fudong">
+    <div id="top">
+        <div class="logo"><a href="website/index"><img src="website/image/logo.png" /></a></div>
+        <div class="nav">
+            <ul>
+                <li class="mainlevel" id="mainlevel_01"><a href="javascript:void(0);">产品</a>
+                    <ul id="sub_01">
+						<li><a href="/saas-web/website">维金云支付</a></li>
+						<li><a href="https://www.vfnetwork.cn/saas-ucenter">维金云钱包</a></li>
+                    </ul>
+                </li>
+                <li class="mainlevel" id="mainlevel_02"><a href="javascript:void(0);">解决方案</a>
+                    <ul id="sub_02">
+                        <li><a href="javascript:void(0);">网站付款</a></li>
+                        <li><a href="javascript:void(0);">手机付款</a></li>
+                        <li><a href="javascript:void(0);">会员账户</a></li>
+                        <li><a href="javascript:void(0);">金融服务</a></li>
+                    </ul>
+                </li>
+                <li class="mainlevel" id="mainlevel_03"><a href="javascript:void(0);">报价</a></li>
+                <li class="mainlevel" id="mainlevel_04"><a href="javascript:void(0);">开发者中心</a>
+                    <ul id="sub_04">
+						<li><a href="/saas-web/website/apitool">API</a></li>
+						<li><a href="/saas-web/all_san_pay">文档库</a></li>
+						<li><a href="/saas-web/website/download">下载</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div id="divUser" class="login1" style="display: none;">
+            <a id="aUser" href="/saas-web"></a>
+            <a id="logout" href="javascript:void(0);">退出</a>
+        </div>
+        <div id="divLogin" class="login" style="display: none;">
+            <span class="button">
+                <a href="/saas-web/logon_index">登录</a>
+            </span>
+            <a href="/saas-web/register_index">注册</a>
+        </div>
+    </div>
+</div>
+
+<div class="access_netbox clearfix content" style=" padding-bottom:120px;padding-top: 100px;">
+	<div class="access_netbox_left fl">
+		<div class="access_netbox_left_menu">
+			<h2>
+				<span class="fl">API文档</span><span class="access_netbox_left_menu_bg fr"></span>
+			</h2>
+			<ul>
+					<li><a href="./all_san_pay" name="appas" apptype="0" class="access_netbox_left_menu_a" style="font-size: 16px">统一下单PC扫码</a></li>
+					<li><a href="./query_trade" name="appas" apptype="0" class="access_netbox_left_menu_a_acitve" style="font-size: 16px">交易查询</a></li>
+			</ul>
+		</div>
+		<div class="auto_test_tools tools box_shadow radius_three">
+			<span></span><a href="./website/apitool" style="font-size: 16px" >自动测试工具</a>
+		</div>
+	</div>
+	<div class="access_api_describe fr netbox">
+			<h2 class="access_api_describe_title clearfix"><span class="fl ">交易查询接口</span>
+			<div class="clear"></div>
+			<p class="access_api_describe_promp"></p></h2>
+			<div class="input_num">
+				<h2 class="access_netbox_right_h2">应用级输入参数</h2>
+				<table cellspacing="0" cellpadding="0" border="0" class="access_netbox_right_table fund_deal_api_table">
+					<colgroup width="119"></colgroup>
+					<colgroup width="124"></colgroup>
+					<colgroup width="111"></colgroup>
+					<colgroup width="136"></colgroup>
+					<colgroup width="296"></colgroup>
+					<tbody>
+						<tr>
+						<th>名称</th>
+						<th>类型</th>
+						<th>是否必须</th>
+						<th>示例值</th>
+						<th>描述</th>
+					 </tr>
+					 <tr>
+						<td>appKey</td>
+					  <td>String(18)</td>
+						<td>是</td>
+						<td>100120160907100010</td>
+						<td>维金分配给商户的唯一身份key</td>
+					 </tr>
+					 <tr>
+					    <td>merchantId</td>
+					    <td>int(20)</td>
+						<td>是</td>
+						<td>100120</td>
+						<td>商户ID(维金自动生成)</td>
+					 </tr>
+					 <tr>
+						<td>channelCode</td>
+						<td>String(10)</td>
+						<td>是</td>
+						<td>WXPAY</td>
+						<td>渠道代码，商户所调用的渠道</td>
+					</tr>
+					<tr>
+						<td>instOrderNo</td>
+						<td>String(20)</td>
+						<td>是</td>
+						<td>1123434423367991118</td>
+						<td>外部订单号</td>
+					</tr>
+					<tr>
+						<td>toRSA</td>
+						<td>String(100)</td>
+						<td>是</td>
+						<td>WASjvAbsOzvgntONsODBWEQm6JHq</td>
+						<td>RSA签名，身份验证</td>
+					</tr> 
+				</tbody></table>
+			</div>
+			<div class="back_value">
+				<h2 class="access_netbox_right_h2">返回值</h2>
+				<table cellspacing="0" cellpadding="0" border="0" class="access_netbox_right_table fund_deal_api_table">
+					<colgroup width="119"></colgroup>
+					<colgroup width="124"></colgroup>
+					<colgroup width="111"></colgroup>
+					<colgroup width="136"></colgroup>
+					<colgroup width="296"></colgroup>
+					<tbody><tr>
+						<th>名称</th>
+						<th>类型</th>
+						<th>是否必须</th>
+						<th>示例值</th>
+						<th>描述</th>
+					</tr>
+					<tr>
+						<td>appKey</td>
+						<td>String(20)</td>
+						<td>是</td>
+						<td></td>
+						<td>维金分配给商户的唯一身份key</td>
+					</tr>
+					<tr>
+					    <td>merchantId</td>
+					    <td>int(20)</td>
+						<td>是</td>
+						<td>100120</td>
+						<td>商户ID(维金自动生成)</td>
+					 </tr>
+					<tr>
+						<td>channelCode</td>
+						<td>String(10)</td>
+						<td>是</td>
+						<td>WXAPP</td>
+						<td>渠道代码，商户所调用的渠道</td>
+					</tr>
+					<tr>
+						<td>amount</td>
+						<td>String(5)</td>
+						<td>是</td>
+						<td>0.01</td>
+						<td>支付金额，精确小数点两位小数</td>
+					</tr>
+					<tr>
+						<td>createTime</td>
+						<td>String(20)</td>
+						<td>是</td>
+						<td>2016-07-04 10:05:20</td>
+						<td>创建支付单时间 yyyy-MM-dd HH:mm:ss</td>
+					</tr>
+					<tr>
+						<td>instOrderNo</td>
+						<td>String(20)</td>
+						<td>是</td>
+						<td>1123434423367991118</td>
+						<td>机构订单号</td>
+					</tr>
+					<tr>
+						<td>mchId</td>
+						<td>String(20)</td>
+						<td>是</td>
+						<td></td>
+						<td>商户在渠道所注册的商户号</td>
+					</tr>
+					<tr>
+						<td>proDesc</td>
+						<td>String(20)</td>
+						<td>是</td>
+						<td>商品描述</td>
+						<td>商品描述</td>
+					</tr>
+					<tr>
+						<td>tradeStates</td>
+						<td>String(20)</td>
+						<td>是</td>
+						<td>0005</td>
+						<td>0002 失败 0003 处理中 0005 成功</td>
+					</tr>
+					<tr>
+						<td>tradeType</td>
+						<td>String(20)</td>
+						<td>是</td>
+						<td>交易类型</td>
+						<td>P 表示支付 T 表示退款</td>
+					</tr>
+					<tr>
+						<td>success</td>
+						<td>String(10)</td>
+						<td>是</td>
+						<td>true</td>
+						<td>表示是否存在交易记录 true 有 false 无</td>
+					</tr>	
+					<tr>
+						<td>error</td>
+						<td>String(30)</td>
+						<td>是</td>
+						<td></td>
+						<td>查询交易记录不存在情况返回</td>
+					</tr>					
+				</tbody></table>
+			</div>
+			<div class="back_example">
+				<h2 class="access_netbox_right_h2">返回示例（查询成功）</h2>
+				<div class="back_example_json">
+					<h2 class="example_title">JSON示例</h2>
+					<div id="rejsonPre"></div>
+					<div class="line number5 index4 alt2">
+			          {"amount":"0.01","appKey":"100120160907100010","channelCode":"WXPAY","createTime":"2016-07-04 10:05:20","instOrderNo":"25445423367991218","mchId":"1370335602",
+			          "proDesc":"本交易由维金提供通道服务","success":true,"tradeStates":"0002","tradeType":"P","merchantId":"102056"}
+                    </div>
+				</div>
+			</div>
+			<div class="back_example">
+				<h2 class="access_netbox_right_h2">返回示例（查询失败）</h2>
+				<div class="back_example_json">
+					<h2 class="example_title">JSON示例</h2>
+					<div id="rejsonPre"></div>
+					<div class="line number5 index4 alt2">
+          {"error":"支付订单不存在","success":false}</div>
+				</div>
+			</div>
+			<div class="back_value">
+				<h2 class="access_netbox_right_h2">渠道枚举</h2>
+				<table cellspacing="0" cellpadding="0" border="0" class="access_netbox_right_table fund_deal_api_table">
+					<colgroup width="162"></colgroup>
+					<colgroup width="254"></colgroup>
+					<colgroup width="376"></colgroup>
+					<tbody>
+					<tr>
+						<th>渠道码</th>
+						<th>渠道描述</th>
+					</tr>
+					<tr>
+						<td>WXPAY</td>
+						<td>微信支付</td>
+					</tr>
+					<tr>
+						<td>ALIPAY</td>
+						<td>支付宝</td>
+					</tr>
+				 </tbody>
+			 </table>
+			</div>
+				<div class="back_value">
+				<h2 class="access_netbox_right_h2">状态枚举</h2>
+				<table cellspacing="0" cellpadding="0" border="0" class="access_netbox_right_table fund_deal_api_table">
+					<colgroup width="162"></colgroup>
+					<colgroup width="254"></colgroup>
+					<colgroup width="376"></colgroup>
+					<tbody>
+					<tr>
+						<th>状态码</th>
+						<th>状态描述</th>
+					</tr>
+					<tr>
+						<td>0002</td>
+						<td>交易失败</td>
+					</tr>
+					<tr>
+						<td>0003</td>
+						<td>交易处理中</td>
+					</tr>
+					<tr>
+						<td>0005</td>
+						<td>交易成功</td>
+					</tr>
+				 </tbody>
+			 </table>
+			</div>
+		</div>
+
+<!--<script src="https://www.vfnetwork.cn/open-static/saasucenter/js/jquery-1.8.3.min.js"></script>-->
+<!--<script src="https://www.vfnetwork.cn/open-static/saasucenter/js/jquery-ui-1.9.2.min.js"></script>-->
+<!--<script src="https://www.vfnetwork.cn/open-static/saasucenter/js/bootstrap.min.js"></script>-->
+<!--<script src="https://www.vfnetwork.cn/open-static/saasucenter/js/jquery.validate.min.js"></script>-->
+<!--<script src="https://www.vfnetwork.cn/open-static/saasucenter/js/jquery.validate.message_cn.js"></script>-->
+<!--<script src="https://www.vfnetwork.cn/open-static/saasucenter/js/jquery.ajaxDialog.js"></script>-->
+<!--<script src="https://www.vfnetwork.cn/open-static/saasucenter/js/dialog.js"></script>-->
+<!--<script src="https://www.vfnetwork.cn/open-static/saasucenter/js/form.js"></script>-->
+</div>
+<!--<footer>-->
+    <!--了解更多 | 联系我们 | 商务合作<br/>-->
+    <!--维金版权所有 2004-2015 ICP证：沪ICP备14035502号-2-->
+<!--</footer>-->
+<div id="footer"></div>
+<script src="website/js/common.js"></script>
+<script type="text/javascript">
+
+$('.access_netbox_left_menu h2').click(function(){
+	if($(this).children('span:last').hasClass('access_netbox_left_menu_bg')){
+		$(this).children('span:last').removeClass('access_netbox_left_menu_bg').addClass('access_netbox_left_menu_bged');
+		$(this).siblings('ul').hide();
+	}
+	else{
+		$(this).children('span:last').removeClass('access_netbox_left_menu_bged').addClass('access_netbox_left_menu_bg');
+		$(this).siblings('ul').show();
+	}
+})
+</script>
+</body>
+</html>

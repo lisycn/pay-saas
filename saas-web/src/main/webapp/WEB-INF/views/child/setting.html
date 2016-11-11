@@ -1,0 +1,139 @@
+<!DOCTYPE html>  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8"/>
+    <title>云钱包运营网站</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/dist/css/AdminLTE.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/dist/css/skins/skin-blue-light.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css"/>
+    <link rel="stylesheet"
+          href="js/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/plugins/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
+
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon"/>
+    <script type="text/javascript" src="js/lib/requirejs/require.js" data-main="js/require-config.js"></script>
+	<!-- jQuery 2.2.3 -->
+	<script type="text/javascript" src="./jQuery/jquery-2.2.3.min.js"></script>
+	<script th:inline="javascript">
+	 $(document).ready(function(){ 
+		 
+		   $("#regBtn").click(function(){
+			   
+				var email = $("#email").val();
+			    var pwd = $("#pwd").val();
+			    var repwd =  $("#repwd").val();
+			    var id = $("#id").val();
+			    var createTime = $("#createTime").val();
+			    var msg = $("#msg");
+			    var checkpwd = /^[a-zA-Z0-9\u0000-\u00FF]{6,15}$/;
+
+			    if( jQuery.isEmptyObject(email) ){
+			    	msg.html('<font color="red">邮箱不能为空!</font>');
+			    	return false;
+			    }
+			    if( jQuery.isEmptyObject(pwd) ){
+			    	msg.html('<font color="red">密码不能为空!</font>');
+			    	return false;
+			    }
+			    if( jQuery.isEmptyObject(repwd) ){
+			    	msg.html('<font color="red">确认密码不能为空!</font>');
+			    	return false;;
+			    }
+			    if( !checkpwd.test(pwd) ){
+			    	msg.html('<font color="red">只允许大小写英文字母、数字和半角符号 6-15位!</font>');
+			    	return false;
+			    }
+			    if( pwd != repwd ){
+			    	msg.html('<font color="red">两次密码输入不一致!</font>');
+			    	return false;
+			    }
+
+			    $.ajax({
+				           cache: false,
+				           type: "POST",
+				           url:"./active_child_setting",
+//				           data:$('#reg_form').serialize(),
+				           data:{
+							   'email':email,
+							   'id':id,
+							   'createTime':createTime,
+							   'pwd':pwd,
+							   'repwd':repwd
+						   },
+				           dataType:'json',
+				           async: true,
+				           error: function(obj) {
+				           },
+				           success: function(data) {
+					           if( 'FAIL' == data.returnCode ){
+					        	   if( undefined == data.returnMsg ){
+					        		   $("#msg").html('<font color="red">发生异常,请联系管理员</font>');
+					        	   }else{
+					        		   $("#msg").html('<font color="red">'+data.returnMsg+'</font>');
+					        	   }
+					           }else{
+					        	   $("#isReg").val("S");
+					        	   location.href = "./active_success";
+					           }
+				          }
+				});
+		    	
+		    	if( $("#isReg").val() == 'F' ){
+		    		return false;
+		    	}
+			
+		   });
+	 }); 
+	</script>
+</head>
+<body class="hold-transition register-page" style="height: 700px" >
+<div class="register-box">
+    <div class="register-logo">
+		<a href="./website/index"><img src="image/201_42px.png" style="padding-bottom: 5px;" /></a>
+    </div>
+
+    <div class="register-box-body">
+        <p id="msg" class="login-box-msg">设置密码</p>
+
+        <form id="reg_form" method="post">
+            <input id="isReg" name="isReg" type="hidden" th:value="F" />
+			<input id="id" name="id" type="hidden" th:value="${id}" />
+			<input id="createTime" name="createTime" type="hidden" th:value="${createTime}" />
+            <div class="form-group has-feedback">
+                <input id="email" type="email" class="form-control"  name="email" maxlength="35" th:value="${email}" disabled="disabled" />
+                <span></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input id="pwd" type="password" class="form-control" placeholder="请输入密码" name="pwd" maxlength="15" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+                <span></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input id="repwd" type="password" class="form-control" placeholder="重复密码" name="repwd" maxlength="15" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+                <span></span>
+            </div>
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-xs-12">
+                    <button id="regBtn" type="submit" class="btn btn-primary btn-block btn-flat">保存</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+    </div>
+    <!-- /.form-box -->
+</div>
+</body>
+</html>

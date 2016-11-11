@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="image/favicon.ico" media="screen" />
+    <link href="css/index.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
+    <script src='js/jquery-1.12.1.min.js'></script>
+    <script src="js/slide.js"></script>
+    <title>维金云支付</title>
+</head>
+
+<body>
+<div class="header">
+    <div id="top">
+        <div class="logo"><a href="index"><img src="image/logo.png"></a></div>
+        <div class="nav" >
+            <ul>
+                <li class="mainlevel" id="mainlevel_01"><a href="javascript:void(0);">产品</a>
+                    <ul id="sub_01">
+                        <li><a href="/saas-web/website">维金云支付</a></li>
+                        <li><a href="https://www.vfnetwork.cn/saas-ucenter">维金云钱包</a></li>
+                    </ul>
+                </li>
+                <li class="mainlevel" id="mainlevel_02"><a href="javascript:void(0);">解决方案</a>
+                    <ul id="sub_02">
+                        <li><a href="#">网站付款</a></li>
+                        <li><a href="#">手机付款</a></li>
+                        <li><a href="#">会员账户</a></li>
+                        <li><a href="#">金融服务</a></li>
+                    </ul>
+                </li>
+                <li class="mainlevel" id="mainlevel_03"><a href="javascript:void(0);">报价</a></li>
+                <li class="mainlevel" id="mainlevel_04"><a href="javascript:void(0);">开发者中心</a>
+                    <ul id="sub_04">
+                        <li><a href="/saas-web/website/apitool">API</a></li>
+                        <li><a href="/saas-web/all_san_pay">文档库</a></li>
+                        <li><a href="/saas-web/website/download">下载</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div id="divUser" class="login1" style="display: none;">
+            <a id="aUser" href="/saas-web"></a>
+            <a id="logout" href="javascript:void(0);">退出</a>
+        </div>
+        <div id="divLogin" class="login"style="display: none;">
+            <span class="button">
+                <a href="/saas-web/logon_index">登录</a>
+            </span>
+            <a href="/saas-web/register_index">注册</a>
+        </div>
+    </div>
+</div>
+
+<div class="APItool">
+    <div class="title">自动测试工具</div>
+    <div class="con">
+        <div class="left">
+            <ul>
+                <li>
+                    <span class='auto_check_left_li_span'>API名称</span>
+                    <select id="apiName" class="select input_padding border_grey radius_two">
+                        <option value="allpay">扫码支付</option>
+                    </select>
+                </li>
+                <li>
+                    <span class='auto_check_left_li_span'>支付渠道</span>
+                    <select id="channelCode" class="select input_padding border_grey radius_two">
+                        <option value="">选择渠道</option>
+                        <option value="WXPAY">微信</option>
+                        <option value="ALIPAY">支付宝</option>
+                    </select>
+                </li>
+                <li>
+                    <span class='auto_check_left_li_span'>AppKey</span>
+                    <input type="text" id="appKey" class="text input_padding border_grey radius_two" maxlength="25" placeholder="请输入AppKey" >
+                </li>
+                <li>
+                    <span class='auto_check_left_li_span'>订单号</span>
+                    <input type="text" id="instOrderNo" class="text input_padding border_grey radius_two" maxlength="30" placeholder="请输入订单号">
+                </li>
+                <li>
+                    <span class='auto_check_left_li_span'>支付金额</span>
+                    <input type="text" id="amount" class="text input_padding border_grey radius_two" maxlength="10" placeholder="请输入金额（元）">&nbsp;格式：0.00
+                </li>
+                <li>
+                    <span class='auto_check_left_li_span'>商品名</span>
+                    <input type="text" id="proSubject" class="text input_padding border_grey radius_two" maxlength="30" placeholder="请输入商品名">
+                </li>
+                <li>
+                    <span class='auto_check_left_li_span'>商品描述</span>
+                    <input type="text" id="proDesc" class="text input_padding border_grey radius_two" maxlength="100" placeholder="请输入商品描述">
+                </li>
+                <li>
+                    <span class='auto_check_left_li_span'>下单时间</span>
+                    <input type="text" id="createTime" class="text input_padding border_grey radius_two" readonly="readonly">
+                </li>
+                <li>
+                    <span class='auto_check_left_li_span'>RSA 密文</span>
+                    <input type="text" id="toRSA" class="text input_padding border_grey radius_two" maxlength="200" placeholder="请输入RSA密文">
+                </li>
+                <li>
+                    <span></span>
+                    <input type="button" class="button radius_two" id="btnSubmit" value="提交测试">
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <div class="back">
+                <h2 class="back_title">API请求参数</h2>
+                <textarea id="apiReq" class="back_check"></textarea>
+            </div>
+
+            <div class="back">
+                <h2 class="back_title">API返回结果</h2>
+                <textarea id="apiResp" class="back_check"></textarea>
+            </div>
+
+            <div class="back" style="display: none;">
+                <h2 class="back_title">二维码</h2>
+                <img id="qrcode" src="image/pay_phone2.png">
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer"></div>
+
+<script src="js/common.js"></script>
+<script type="text/javascript">
+
+    var backendUrl;
+    var createTime;
+
+    $(function () {
+        var date = new Date();
+        createTime = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+        $("#createTime").val(createTime);
+
+        getGatewayRootUrl();
+        isLogin();
+    });
+
+    function getGatewayRootUrl() {
+        var url = "getGatewayRootUrl";
+        $.getJSON(url, function(result){
+            backendUrl = result.url;
+        });
+    }
+
+    function checkForm() {
+        var isOk = false;
+        if (checkMustInput()) {
+            if (checkAmount()) {
+                isOk = true;
+            }
+        }
+        return isOk;
+    }
+
+    function checkMustInput() {
+        var isOk = false;
+        if (!$("#channelCode").val()) {
+            alert("支付渠道 不能为空");
+            $("#channelCode").focus();
+        } else if (!$("#appKey").val().trim()) {
+            alert("app key 不能为空");
+            $("#appKey").focus();
+        } else if (!$("#instOrderNo").val().trim()) {
+            alert("订单号不能为空");
+            $("#instOrderNo").focus();
+        } else if (!$("#amount").val().trim()) {
+            alert("支付金额不能为空");
+            $("#amount").focus();
+        } else if (!$("#toRSA").val().trim()) {
+            alert("RSA 密文不能为空");
+            $("#toRSA").focus();
+        } else {
+            isOk = true;
+        }
+        return isOk;
+    }
+
+    function checkAmount() {
+        var num = $("#amount").val().trim();
+        var decimalReg=/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+        var numVal = decimalReg.test(num);
+        if (numVal) {
+            if (parseFloat(num) == 0)
+                numVal = false;
+        }
+        if (!numVal) {
+            alert('支付金额必须为大于0的正数，可保留两位小数');
+            $("#amount").focus();
+        }
+        return numVal;
+    }
+
+    $("#btnSubmit").bind("click", function(){
+        if (!checkForm()) return;
+        var url = backendUrl+"/gateway-pay/vfinance/test_Pay"
+                +"?createTime="+createTime
+                +"&instOrderNo="+$("#instOrderNo").val().trim()
+                +"&appKey="+$("#appKey").val().trim()
+                +"&channelCode="+$("#channelCode").val().trim()
+                +"&amount="+$("#amount").val().trim()
+                +"&proSubject="+$("#proSubject").val().trim()
+                +"&proDesc="+$("#proDesc").val().trim()
+                +"&toRSA="+$("#toRSA").val().trim()
+                +"&callback=?";
+
+        var url2 = url.replace("test_Pay", "all_Pay").substr(0, url.length-12);
+        $("#apiReq").val(url2);
+        $.getJSON(url, function(result){
+            $("#apiResp").val(JSON.stringify(result, null, 4));
+        });
+    });
+</script>
+</body>
+</html>

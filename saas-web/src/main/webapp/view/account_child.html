@@ -1,0 +1,188 @@
+<div ng-controller="accountChildController">
+    <h2>子账户管理</h2>
+
+    <div class="col-xs-12 width-animate" id="child_left">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">账户信息</h3>
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default" ng-click="add_child();" id="btn_add"><i
+                                    class="fa fa-fw fa-plus-circle"></i>添加
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="table-responsive no-padding">
+                    <table class="table table-hover" ng-if="childFlag">
+                        <tbody>
+                        <tr>
+                            <th>邮箱</th>
+                            <th>角色</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr ng-repeat="child in childList">
+                            <td>{{child.email}}</td>
+                            <td>
+                                <span class="label label-success" ng-repeat="merchantRole in child.merchantRoleList">{{merchantRole.roleName}}</span>
+                            </td>
+                            <td>{{child.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                            <td>
+                                <div class="btn-group">
+                                    <a title="启用" class="btn btn-default" ng-if="child.usingStatus == 0" ng-click="enable_using_status(child);">
+                                        <!-- 此时状态为停用，点击则启用 -->
+                                        <i class="fa fa-fw fa-toggle-on"></i>
+                                    </a>
+                                    <a title="停用" class="btn btn-default" ng-if="child.usingStatus == 1" ng-click="unable_using_status(child);">
+                                        <!-- 此时状态为启用，点击则停用 -->
+                                        <i class="fa fa-fw fa-toggle-off"></i>
+                                    </a>
+                                    <a title="编辑" class="btn btn-default" ng-click="display_edit_area(child);">
+                                        <i class="fa fa-fw fa-edit"></i>
+                                    </a>
+                                    <a title="删除" class="btn btn-default" ng-click="delete_child(child.id);">
+                                        <i class="fa fa-fw fa-trash-o"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-center" ng-if="!childFlag">
+                        暂无子账户！
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <div class="hidden" id="child_right">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">子账户设置</h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" ng-click="remove_child();"><i
+                            class="fa fa-remove"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" novalidate="novalidate" ng-submit="execute_add_child();">
+                <div class="box-body">
+                    <div class="form-group">
+                        <p id="msg" class="login-box-msg"></p>
+                        <label for="exampleInputEmail1">邮箱</label>
+                        <input name="email" type="text" class="form-control" id="exampleInputEmail1" placeholder="请输入邮箱"
+                               ng-model="email" />
+                    </div>
+                    <div class="form-group">
+                        <label>角色</label>
+                        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;"
+                                tabindex="-1" aria-hidden="true"  ng-model="selectedRole"
+                                ng-options="role.roleName for role in roleList">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>权限</label>
+                        <section class="sidebar" style="border: 1px double #d0cbcb;">
+                            <ul class="sidebar-menu">
+                                <li class="treeview active" ng-repeat="group in selectedRole.priviledgeGroupList">
+                                    <a href="javascript:;">
+                                        <span>{{group.groupName}}</span>
+                                        <span class="pull-right-container">
+                                          <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                        <ul class="treeview-menu menu-open" style="display: block;">
+                                            <li class="treeview" ng-repeat="pri in group.priviledgeList">
+                                                <a>
+                                                    <i class="fa fa-plus-circle"></i>
+                                                    <span>{{pri.priName}}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </a>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-default pull-right">确认</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="hidden width-animate" id="child_down">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">子账户编辑</h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" ng-click="remove_edit_area();"><i
+                            class="fa fa-remove"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" novalidate="novalidate" ng-submit="execute_edit_child();">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail">邮箱</label>
+                        <input type="email" class="form-control" id="exampleInputEmail" placeholder="请输入邮箱"
+                               ng-model="child.email">
+                    </div>
+                    <div class="form-group">
+                        <label>角色</label>
+                        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;"
+                                tabindex="-1" aria-hidden="true"  ng-model="editedRole"
+                                ng-options="role.roleName for role in roleEditList">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>权限</label>
+                        <section class="sidebar" style="border: 1px double #d0cbcb;">
+                            <ul class="sidebar-menu">
+                                <li class="treeview" ng-repeat="group in editedRole.priviledgeGroupList">
+                                    <a href="javascript:;">
+                                        <span>{{group.groupName}}</span>
+                                        <span class="pull-right-container">
+                                          <i class="fa fa-angle-left pull-right"></i>
+                                        </span>
+                                        <ul class="treeview-menu menu-open">
+                                            <li class="treeview" ng-repeat="pri in group.priviledgeList">
+                                                <a>
+                                                    <i class="fa fa-plus-circle"></i>
+                                                    <span>{{pri.priName}}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </a>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <!--ng-click="execute_edit_child();"-->
+                    <button type="submit" class="btn btn-default pull-right" >确认</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

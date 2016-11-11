@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>验证通知</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        .content {
+            width: 700px;
+            background: #f0f0f0;
+            margin: 50px auto;
+        }
+
+        .content_top {
+            width: 648px;
+            height: 52px;
+            padding: 26px;
+            margin: 0;
+        }
+
+        .content_topL {
+            width: 200px;
+            float: left;
+            padding: 9px 0 0 0;
+        }
+
+        .content_topR {
+            width: 200px;
+            float: right;
+            text-align: right;
+            font-family: "宋体";
+            font-size: 12px;
+            padding-top: 28px;
+            color: #747474;
+        }
+
+        .content_topR a {
+            color: #747474;
+        }
+
+        .content_topR a:hover {
+            color: #1f86ef;
+        }
+
+        .content_con {
+            width: 648px;
+            margin: 0 25px;
+            padding: 0px;
+            border: 1px solid #ecebeb;
+            background: url(img/letter_bottom.png) #fcfcfc bottom center no-repeat;
+        }
+
+        .content_conT {
+            width: 648px;
+            height: 79px;
+            background: url(img/letter_top.png) top center no-repeat;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .content_conT span {
+            font-size: 26px;
+            padding-top: 13px;
+            letter-spacing: 1px;
+            display: block;
+            font-family: "微软雅黑";
+            font-weight: 100;
+            color: #1f86ef;
+        }
+
+        .content_conB {
+            width: 580px;
+            height: auto;
+            padding: 27px 34px 45px 34px;
+            font-size: 16px;
+            font-family: "微软雅黑";
+            line-height: 28px;
+        }
+
+        .content_conB p {
+            padding: 1px 0;
+            margin: 10px 0px 25px 0px;
+        }
+
+        .content_conB a {
+            color: #0066ce;
+        }
+
+        .content_conB a:hover {
+            color: #439cf7;
+        }
+
+        .content_bottom {
+            width: 580px;
+            height: 100px;
+            padding: 46px 60px 35px 60px;
+        }
+
+        .content_bottomL {
+            width: 120px;
+            height: 100px;
+            float: left;
+        }
+
+        .content_bottomR {
+            width: 460px;
+            height: auto;
+            float: left;
+            color: #666666;
+        }
+
+        .content_bottomR .title {
+            font-size: 20px;
+            font-family: "微软雅黑";
+        }
+
+        .content_bottomR p {
+            font-size: 12px;
+            line-height: 18px;
+            padding: 5px 0;
+            margin: 0px;
+            font-family: Arial;
+        }
+
+        .content_bottomR a {
+            color: #666666;
+        }
+
+        .content_bottomR a:hover {
+            color: #1f86ef;
+        }
+    </style>
+    <script>
+        function to_active() {
+            var form = document.getElementById("submit_form");
+            form.submit();
+        }
+    </script>
+</head>
+<body style="background:#fafafa;">
+<div class="content">
+    <div class="content_top">
+        <div class="content_topL"><img src="/img/logo.png"/></div>
+        <div class="content_topR"></div>
+    </div>
+    <div class="content_con">
+        <div class="content_conT"><span>验证通知</span></div>
+        <div class="content_conB">
+            <p>尊敬的_EMAIL_VALUE_您好！</p>
+
+            <p>
+                感谢您使用维金云钱包，请点击以下链接设置账户密码，完成验证：<a href="javascript:;" onclick="to_active();" target="_blank">点击激活</a>
+
+            <form id="submit_form" action="active_child_merchant" method="post">
+                <input name="email" type="hidden" value="_EMAIL_VALUE_"/>
+                <input name="id" type="hidden" value="_ID_VALUE_"/>
+            </form>
+
+            </p>
+            <p>此为系统邮件，请勿直接回复。</p></div>
+    </div>
+    <div class="content_bottom">
+        <div class="content_bottomL"><img src="/img/Qr code.png"/></div>
+        <div class="content_bottomR"><span class="title">关于维金</span>
+
+            <p>维金云钱包支持所有邮箱、最快新邮件提醒、图片附件压缩快速收发节省流量、 手势密码等多重安全保障。
+                <br/>网址：www.vfinance.cn 服务热线：400-101-9595合作洽谈：021-80168700</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

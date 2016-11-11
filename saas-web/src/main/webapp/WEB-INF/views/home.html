@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>云钱包运营后台</title>
+    <meta
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+            name="viewport">
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/dist/css/AdminLTE.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/dist/css/skins/skin-blue-light.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css"/>
+    <link rel="stylesheet"
+          href="js/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/plugins/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
+    <link rel="stylesheet"
+          href="js/lib/jquery-confirm2/dist/jquery-confirm.min.css"/>
+
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/home.css"/>
+    <!--<link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon"/>-->
+    <link rel="shortcut icon" type="image/x-icon" href="image/favicon.ico" media="screen"/>
+    <script>
+        var AdminLTEOptions = {
+            //Enable sidebar expand on hover effect for sidebar mini
+            //This option is forced to true if both the fixed layout and sidebar mini
+            //are used together
+            sidebarExpandOnHover: true,
+            //BoxRefresh Plugin
+            enableBoxRefresh: true,
+            //Bootstrap.js tooltip
+            enableBSToppltip: true
+        };
+    </script>
+    <script type="text/javascript"
+            src="js/lib/requirejs/require.js" data-main="js/require-config.js"></script>
+</head>
+<body class="skin-blue-light fixed" ng-controller="bodyController">
+
+<header class="main-header">
+    <a href="website" class="logo"> <img
+            src="image/login_favicon_all.png" style="padding-bottom: 5px;">
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+
+                <!-- User Account: style can be found in dropdown.less -->
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="image/user2-160x160.jpg" class="user-image" alt="User Image">
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- User image -->
+                        <li class="user-header">
+                            <img src="image/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                            <div class="row">
+                                <div class="text-center" >
+                                    <span class="hidden-xs">{{role.roleName}}</span>
+                                </div>
+                            </div>
+                            <p>
+                                {{merchant.description}}
+                                <small>{{merchant.email}}</small>
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+                        <li class="user-body">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <span class="hidden-xs">{{merchant.name}}</span>
+                                </div>
+                                <div class="col-xs-4 pull-right">
+                                    <a href="#">{{merchant.phone}}</a>
+                                </div>
+                            </div>
+
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-right">
+                                <a href="website" class="btn btn-warning btn-flat"><i
+                                        class="fa fa-fw fa-mail-reply-all"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+</header>
+
+
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <ul class="sidebar-menu" ng-controller="sidebarController">
+            <li class="header">菜单</li>
+            <li class="treeview" ng-repeat="group in role.priviledgeGroupList">
+                <a href="javascript:;">
+                    <i class="fa fa-fw" ng-class="group.groupIcon"></i>
+                    <span>{{group.groupName}}</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                    <ul class="treeview-menu menu-open" >
+                        <li class="treeview " ng-repeat="app in appList" ng-if="group.groupCode == 'product_manager' && appList">
+                            <a class="app_{{app.id}}" ng-class="{true:'active'}[$index==0]"
+                               ng-href="#/product_manager?appData={{app}}" ng-click="to_product_manager(app,$index);">
+                                <i class="fa fa-circle-o"></i><span>{{app.appName}}</span>
+                            </a>
+                        </li>
+                        <li class="treeview"  ng-if="group.groupCode == 'product_manager' && !appList">
+                            <a class="active"
+                               ng-href="#/product_add">
+                                <i class="fa fa-plus-circle"></i><span>添加应用</span>
+                            </a>
+                        </li>
+                        <li class="treeview" ng-repeat="pri in group.priviledgeList" ng-if="group.groupCode != 'product_manager' ">
+                            <a ng-href="#/{{pri.priCode}}">
+                                <i class="fa" ng-class="pri.priIcon"></i>
+                                <span>{{pri.priName}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <!--<section class="sidebar">-->
+    <!--<ul class="sidebar-menu" ng-controller="sidebarController">-->
+    <!--<li class="header">菜单</li>-->
+    <!--<li class="treeview active">-->
+    <!--<a href="#">-->
+    <!--<i class="fa fa-fw fa-cubes"></i>-->
+    <!--<span>应用管理</span>-->
+    <!--<span class="pull-right-container">-->
+    <!--<i class="fa fa-angle-left pull-right"></i>-->
+    <!--</span>-->
+    <!--</a>-->
+    <!--<ul class="treeview-menu menu-open" style="display: none;">-->
+    <!--<li class="treeview " ng-repeat="app in appList">-->
+    <!--<a class="app_{{app.id}}" ng-class="{true:'active'}[$index==0]"  href="#/product_manager?appData={{app}}" ng-click="to_product_manager(app,$index);">-->
+    <!--<i class="fa fa-circle-o"></i><span>{{app.appName}}</span>-->
+    <!--</a>-->
+    <!--</li>-->
+    <!--<li class="treeview product_add"><a href="#/product_add">-->
+    <!--<i class="fa fa-plus-circle"></i><span>添加应用</span></a>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</li>-->
+    <!--<li class="treeview" >-->
+    <!--<a href="#">-->
+    <!--<i class="fa fa-fw fa-gear"></i>-->
+    <!--<span>账户中心</span>-->
+    <!--<span class="pull-right-container">-->
+    <!--<i class="fa fa-angle-left pull-right"></i>-->
+    <!--</span>-->
+    <!--</a>-->
+    <!--<ul class="treeview-menu menu-open" style="display: none;">-->
+    <!--<li style="display: none"><a href="#/account_auth"><i class="fa fa-circle-o"></i>企业认证</a></li>-->
+    <!--<li style="display: none"><a href="#/account_center"><i class="fa fa-circle-o"></i>账户信息</a></li>-->
+    <!--<li><a href="#/account_child"><i class="fa fa-circle-o"></i>子账户管理</a></li>-->
+    <!--</ul>-->
+    <!--</li>-->
+    <!--<li class="treeview"  style="display: none">-->
+    <!--<a href="#">-->
+    <!--<i class="fa fa-fw fa-calendar"></i><span>财务对账</span>-->
+    <!--<span class="pull-right-container">-->
+    <!--<i class="fa fa-angle-left pull-right"></i>-->
+    <!--</span>-->
+    <!--</a>-->
+    <!--<ul class="treeview-menu menu-open" style="display: none;">-->
+    <!--<li><a href="#/balance_analyse"><i class="fa fa-circle-o"></i>汇总分析</a></li>-->
+    <!--<li><a href="#/balance_query"><i class="fa fa-circle-o"></i>明细查询</a></li>-->
+    <!--</ul>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</section>-->
+</aside>
+<div class="content-wrapper ">
+    <div class="content body" style="min-height: 974px;background: #ecf0f5;">
+        <div ui-view></div>
+    </div>
+</div>
+<!-- 登陆 model开始-->
+<div id="modal_login" style="display: none">
+    <div class="mask"></div>
+    <div class="Popup">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    <a href="website" class="login-logo"> <img
+                            src="image/201_42px.png" style="padding-bottom: 5px;">
+                    </a>
+                </h3>
+            </div>
+
+            <!-- /.login-logo -->
+            <div class="box-body">
+                <p id="msg" class="login-box-msg">欢迎回来</p>
+
+                <div class="form-group has-feedback">
+                    <input type="text" class="form-control" placeholder="请输入邮箱" ng-model="login_email">
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" class="form-control" placeholder="请输入密码" ng-model="login_password">
+                </div>
+                <div id="verifycode" class="form-group has-feedback" style='display: none;'>
+                    <input id="valcode" type="text" class="form-control" placeholder="请输入验证码" name="validationCode"
+                           maxlength="6" ng-model="login_verify_code"/>
+                    <img class="validationCode_img" src="./create_ver_code" ng-click="to_verify_code();"/>
+                </div>
+                <div class="row">
+                    <!-- /.col -->
+                    <div class="col-xs-12">
+                        <button ng-click="to_merchant_login();" class="btn btn-primary btn-block btn-flat">登 录</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </div>
+            <!-- /.login-box-body -->
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

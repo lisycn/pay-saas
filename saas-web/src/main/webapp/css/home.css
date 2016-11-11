@@ -1,0 +1,153 @@
+
+.login{ float:right; line-height:62px; padding-top:10px; font-size:14px; color:#CCCCCC;}
+.login .button a{padding:3px 18px; background:#4b98ff; color:#fff; border-radius:4px;}
+.login .button a:hover{ background:#3a85e9; color:#fff;}
+.login a{color:#4b98ff; padding:0px 10px;}
+.login a:hover{color:#3a85e9;}
+.login1{ float:right; line-height:62px; padding-top:10px; font-size:14px; color:#4b98ff;}
+.login1 a{color:#4b98ff; padding:0px 10px;}
+.login1 a:hover{color:#3a85e9; text-decoration: underline;}
+/* CSS Document */
+/*Pay*/
+.pc{ background:#ededed; margin:0 auto; color:#333; padding-bottom:40px;}
+.pc .title{ font-size:32px; color:#333; font-family:"微软雅黑"; text-align:center; padding-top:65px; padding-bottom:52px;}
+.pc .con{ width:1200px; height:640px; box-shadow:0 0 6px 0px #b3b3b3; margin:0 auto;}
+
+.phone{margin:0 auto; color:#333;}
+.phone .title{ font-size:32px; color:#333; font-family:"微软雅黑"; text-align:center; padding-top:85px; padding-bottom:65px;}
+.phone .con{ width:1000px; height:100%; margin:0 auto; display:block; overflow:hidden; padding-bottom:200px;}
+.phone .con .left{ float:left; width:400px; text-align:right; padding-right:100px;}
+.phone .con .right{ float:left; font-size:16px; line-height:25px; padding-top:50px;}
+.phone .con .right .word{color:#407ac3; line-height:30px; padding-bottom:10px;}
+
+footer{ width:100%; height:60px; position:fixed; bottom:0px;  background:#1b2129; padding:15px 0px; text-align:center; color:#999999; font-size:14px; line-height:30px;}
+
+/*Pay_pc1*/
+.head{ height:58px; border-bottom:1px solid #c9c9c9; background:#f6f6f6; font-size:24px; color:#3c71b8; line-height:58px; padding-left:100px; margin-bottom:20px;}
+.Pay_pc1{ width:960px; height:100%; border:1px solid #dde5f7; padding:20px; overflow:hidden; margin:0 auto;}
+.Pay_pc1 .left{ width:418px; height:418px; float:left; padding-right:40px;}
+.Pay_pc1 .right{ float:left; width:502px;}
+.Pay_pc1 .right .title{ padding-bottom:20px;}
+.Pay_pc1 .right .title span{ font-size:16px; color:#333; font-weight:bold; line-height:24px;}
+.Pay_pc1 .right .title p{ font-size:14px; color:#df3030;}
+.Pay_pc1 .right .price{ background:#f0efef; padding:10px;}
+.Pay_pc1 .right .price dl{ overflow:hidden; display:block; line-height:40px;}
+.Pay_pc1 .right .price dl dt{ float:left; font-size:12px; color:#999; width:60px;}
+.Pay_pc1 .right .price dl dd{ float:left;}
+.Pay_pc1 .right .price dl dd .po1{ font-size:14px; color:#4c4c4c;}
+.Pay_pc1 .right .price dl dd .po2{ text-decoration:line-through;}
+.Pay_pc1 .right .price dl dd .po3{ font-size:20px; color:#ff4400; line-height:10px;}
+.Pay_pc1 .right .price dl dd .po4{ font-size:30px; font-weight:bold; font-family:Arial;}
+.Pay_pc1 .right .price dl dd .po5{font-size:14px;font-family:微软雅黑; line-height: 16px; padding-bottom: 5px; color:#ff4400;  display:block;}
+.Pay_pc1 .right .three{ padding:25px 0;}
+.Pay_pc1 .right .three dl{ overflow:hidden; display:block; line-height:50px;}
+.Pay_pc1 .right .three dl dt{ float:left; font-size:12px; color:#6c6c6c; padding-right:40px;}
+.Pay_pc1 .right .three dl dd{ float:left;}
+.Pay_pc1 .right .three dl dd .color{}
+.Pay_pc1 .right .three dl dd .color a{ width:38px; height:38px; margin-right:10px; border:1px solid #dcdcdc; display:block; float:left; padding:1px;}
+.Pay_pc1 .right .three dl dd .color a:hover{ border:2px solid #ff4400; padding:0px;}
+.Pay_pc1 .right .three dl dd .color a.active{ border:2px solid #ff4400; padding:0px;}
+.Pay_pc1 .right .three dl dd .number{ height:26px; border:1px solid #cccccc; display:block; overflow:hidden; margin-top:10px; float:left;}
+.Pay_pc1 .right .three dl dd .number .button{ float:left; width:50px; height:26px; text-align:center; border-left:1px solid #cccccc;border-right:1px solid #cccccc; border-bottom:none; border-top:none;}
+.Pay_pc1 .right .three dl dd .number1{ width:26px; height:26px; background:#ededed center url(../image/pay_pc1_8.png) no-repeat;display:block; float:left;}
+.Pay_pc1 .right .three dl dd .number01{ width:26px; height:26px; background:#ededed center url(../image/pay_pc1_08.png) no-repeat; display:block; float:left;}
+.Pay_pc1 .right .three dl dd .number2{ width:26px; height:26px; background:#ededed center url(../image/pay_pc1_9.png) no-repeat; display:block; float:left;}
+.Pay_pc1 .right .three dl dd .number02{ width:26px; height:26px; background:#ededed center url(../image/pay_pc1_09.png) no-repeat; display:block; float:left;}
+.Pay_pc1 .right .button1{ background:#ffe4d0; border:1px solid #f0cab6; width:134px; height:36px; text-align:center; font-size:16px; color:#e5511d;  border-radius:2px; cursor:pointer;}
+.Pay_pc1 .right .button1:hover{ background:#ffd9bc;}
+.Pay_pc1 .right .button2{ background:#ff4400 35px center url(../image/pay_pc1_10.png) no-repeat; width:172px; height:38px; text-align:center; font-size:16px; color:#fff; border:none;  border-radius:2px; margin:0 10px; cursor:pointer; padding-left:35px;}
+.Pay_pc1 .right .button2:hover{background:#f22d00 35px center url(../image/pay_pc1_10.png) no-repeat;}
+.Pay_pc1 .right .channel{ padding-top:30px; color:#6c6c6c; font-size:12px;}
+.Pay_pc1 .right .channel dl{}
+.Pay_pc1 .right .channel dl dt{ float:left; padding-right:40px;}
+.Pay_pc1 .right .channel dl dd{ float:left;}
+.Pay_pc1 .right .channel dl dd a{ color:#6c6c6c; padding-right:20px;}
+.Pay_pc1 .right .channel dl dd a img{ vertical-align:middle; padding-right:7px;}
+.Pay_pc1 .right .channel dl dd a:hover{ color:#518cdb;}
+
+/*Pay_pc2*/
+.Pay_pc2_price{ width:960px; height:100%; border:1px solid #dde5f7; background:#f7f9fe; padding:10px 20px; overflow:hidden; margin:0 auto;}
+.Pay_pc2_price .left{ float:left; font-size:14px; line-height:30px;}
+.Pay_pc2_price .left span{ color:#333;}
+.Pay_pc2_price .left p{ color:#999;}
+.Pay_pc2_price .right{ float:right; font-size:14px; color:#333; padding-top:10px;}
+.Pay_pc2_price .right span{ color:#f57403; font-size:24px; font-family:Arial; padding:0 2px;}
+.Pay_pc2_channel{ width:1002px; height:100%;overflow:hidden; margin:8px auto;}
+.Pay_pc2_channel .title{ background:url(../image/pay_pc2_1.png) left center no-repeat; font-size:14px; color:#3c71b8; padding-left:10px; line-height:30px; padding-bottom:2px;}
+.Pay_pc2_channel .T{width:960px; height:100%; border:1px solid #dde5f7; padding:10px 20px;}
+.Pay_pc2_channel .T ul{}
+.Pay_pc2_channel .T ul li{height:58px; border:2px solid #fff; border-bottom:1px solid #f3f3f3; vertical-align:middle; padding:0 10px 1px 10px; cursor:pointer;}
+.Pay_pc2_channel .T ul li.active, .Pay_pc2_channel .T ul li:hover{ border:2px solid #728ec9; height:58px; background:#f2f6ff; padding:0 10px 0px 10px;}
+.Pay_pc2_channel .T ul li .payment-check{ float:left; line-height:58px; margin-top:26px; _margin-top:20px; margin-right:20px; }
+.Pay_pc2_channel .T ul li .payment-icon{ float:left; width:30px;  margin-top:20px; }
+.Pay_pc2_channel .T ul li .payment-icon img{ vertical-align:middle; }
+.Pay_pc2_channel .T ul li .payment-way{ float:left; line-height:58px; text-align:left; font-size:14px; font-family:"Microsoft YaHei"; color:#555; }
+
+.Pay_pc2_channel .B{width:960px; height:100%; border:1px solid #dde5f7; padding:0 20px;}
+.Pay_pc2_channel .B ul{overflow:hidden; display:block;}
+.Pay_pc2_channel .B ul li{ width:400px; height:58px; vertical-align:middle; padding:0 10px 1px 10px; cursor:pointer; float:left; }
+.Pay_pc2_channel .B ul li .payment-check{ float:left; line-height:58px; margin-top:26px; _margin-top:20px; margin-right:20px; }
+.Pay_pc2_channel .B ul li .payment-icon{ float:left; width:30px;  margin-top:20px; }
+.Pay_pc2_channel .B ul li .payment-icon img{ vertical-align:middle; }
+.Pay_pc2_channel .B ul li .payment-way{ float:left; line-height:58px; text-align:left; font-size:14px; font-family:"Microsoft YaHei"; color:#555; }
+.Pay_pc2_button{background:#ff4400; width:110px; height:36px; color:#fff; border:none; font-size:16px; margin:15px 30px 0px 0px;border-radius:2px; float:right; cursor:pointer;}
+.Pay_pc2_button:hover{background:#f22d00;}
+
+/*Pay_pc3*/
+.mask{
+    background-color: rgba(0,0,0,0.7);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1200;
+}
+.Popup{width:340px; height:auto; margin:auto; background:#fff; margin-top:150px; position:absolute; z-index: 1300;top:0; left: 0;right: 0; text-align:center;}
+.Popup .close{ width:20px; height:20px; margin:15px 15px 0px 15px; float:right; background:url(../image/close.png)right center no-repeat; cursor:pointer;}
+.Popup .close:hover{ background:url(../image/close2.png) right no-repeat;}
+
+.Popup .title{ width:100%; text-align:center; font-size:16px; line-height:40px; padding-bottom:5px; color:#333333; display:block; overflow:hidden;}
+.Popup .con { padding: none;}
+.Popup .con img{ width:200px; height:200px;}
+.Popup .button{ width:160px; height:36px; text-align:center; display:block; margin:0px auto 20px auto; background:#ff4400; border:none; color:#fff; font-size:16px; font-family:"微软雅黑";border-radius:2px; cursor:pointer;}
+.Popup .button:hover{background:#f22d00;}
+
+
+/*APItool*/
+.APItool{ width:1200px; height:auto; margin:0 auto;}
+.APItool .title{ font-size:28px; font-weight:normal; border-bottom:1px solid #ddd; line-height:40px; color:#333; font-family:"微软雅黑"; padding-bottom:10px; margin:24px 0px;}
+.APItool .con{ width:1200px; overflow:hidden; padding-bottom:50px;}
+.APItool .con .left{ float:left; width:500px; font-family:"微软雅黑";}
+.APItool .con .left ul li{ height:40px; line-height:40px; margin-bottom:16px; font-size:14px; font-family:"微软雅黑";}
+.APItool .con .left ul li span{ width:88px; display:inline-block; text-align:right; margin-right:15px; font-size:14px;}
+.APItool .con .left ul li .select{ width:215px; height:38px; line-height:38px;}
+.APItool .con .left ul li .text{ width:215px; height:38px; line-height:38px;}
+.APItool .con .left ul li .shuo{ display:block; margin-left:34px;}
+.APItool .con .left ul li .font_red{ color:#f00;}
+.APItool .con .left ul li  a{ color:#666; margin-left:12px; cursor:pointer;}
+.APItool .con .left ul li  a:hover{ color:#2f63a7; text-decoration:underline;}
+.APItool .con .left ul li .button{ width:266px; height:50px; font-size:18px; font-family:"微软雅黑"; background:#2984d1; color:#fff; cursor:pointer; border:none;}
+.border_grey{ border:1px solid #ddd;}
+.input_padding{ padding-left:8px;}
+.radius_two{border-radius:2px;}
+.APItool .con .right{ float:right; margin-right:30px;}
+.APItool .con .right .back{}
+.APItool .con .right .back_title{ font-weight:normal; font-size:14px; margin-bottom:7px; color:#333;}
+.APItool .con .right .back_check{ min-width:490px !important; max-width:490px !important; min-height:200px !important; max-height:200px !important; border-radius:3px; border:1px solid #e6e6ee; background:#fff; font-size:12px; text-align:left; padding:10px; margin-bottom:15px; font-family:"微软雅黑";}
+
+/*Download*/
+.Download{ width:1200px; margin:0 auto; display:block; overflow:hidden; padding-top:20px;}
+.Download .title{ background:url(../image/icon_dian.png) left center no-repeat; padding:30px 0px 30px 12px; font-size:20px; color:#333333; line-height:40px;}
+.Download .top{ width:1200px; height:75px; display:block; border-bottom:1px solid #ededed; padding:32px 0px; }
+.Download .top:hover{ background:#ededed;}
+.Download .top img{ border-right:1px solid #e0e0e0; padding:0px 80px; float:left;}
+.Download .top a{ color:#333; font-size:16px; display:block; padding:0px 0px 8px 276px;}
+.Download .top a:hover{ color:#01458a;}
+.Download .bottom{ width:1200px; height:76px; display:block; padding:32px 0px;}
+.Download .bottom:hover{ background:#ededed;}
+.Download .bottom img{ border-right:1px solid #e0e0e0; padding:0px 80px; float:left;}
+.Download .bottom a{ color:#333; font-size:16px; display:block; padding:0px 0px 8px 276px;}
+.Download .bottom a:hover{ color:#01458a;}
+
+

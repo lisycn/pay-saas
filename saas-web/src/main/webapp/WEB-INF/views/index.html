@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>云钱包运营网站</title>
+    <meta
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+            name="viewport">
+    <link rel="stylesheet"
+          href="../js/lib/AdminLTE/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet"
+          href="../js/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet"
+          href="../js/lib/AdminLTE/dist/css/AdminLTE.min.css"/>
+    <link rel="stylesheet"
+          href="../js/lib/AdminLTE/dist/css/skins/skin-blue.min.css"/>
+    <link rel="stylesheet"
+          href="../js/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css"/>
+    <link rel="stylesheet"
+          href="../js/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+
+    <link rel="stylesheet" href="../css/main.css"/>
+    <link rel="shortcut icon" href="../imgs/favicon.ico" type="image/x-icon"/>
+    <script>
+        var AdminLTEOptions = {
+            //Enable sidebar expand on hover effect for sidebar mini
+            //This option is forced to true if both the fixed layout and sidebar mini
+            //are used together
+            sidebarExpandOnHover: true,
+            //BoxRefresh Plugin
+            enableBoxRefresh: true,
+            //Bootstrap.js tooltip
+            enableBSToppltip: true
+        };
+    </script>
+    <script type="text/javascript"
+            src="../js/lib/requirejs/require.js" data-main="../js/require-config.js"></script>
+</head>
+<body class="skin-blue fixed">
+<header class="main-header">
+    <a href="#/" class="logo"> <img
+            src="../imgs/favicon.ico" style="padding-bottom: 5px;">
+        维金云钱包 | 云支付
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                    </li>
+                </ul>
+            </div>
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!-- 产品-->
+                <li class="dropdown messages-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa">产品</i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#">
+                                <h4>
+                                    维金云支付
+                                </h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <h4>
+                                    维金云账户
+                                </h4>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- 解决方案-->
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa">解决方案</i>
+                    </a>
+                </li>
+                <!-- 报价-->
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa">报价</i>
+                    </a>
+                </li>
+                <!-- 文档-->
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa">文档</i>
+                    </a>
+                </li>
+                <!-- 登陆-->
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa">登陆</i>
+                    </a>
+                </li>
+                <!-- 注册-->
+                <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa">注册</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+    <div class="content">
+        <div ui-view></div>
+    </div>
+</body>
+</html>

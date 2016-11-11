@@ -1,0 +1,88 @@
+/* CSS Document */
+body,div,img{style:none; border: none;}
+body{background:#fff; font-family:"微软雅黑";}
+body,form,ul,ol,li,p,dl,dt,dd,h1,h2,h3,h4,h5,h6{margin:0;padding:0;}
+input,select,option{ font-family:"微软雅黑";}
+li{ list-style: none;}
+a{text-decoration: none;}
+
+/*头部*/
+.header{ background:rgba(255,255,255,1); width:100%; height:72px;box-shadow:0 0 5px 0px #ccc ;}
+.fudong{ top:0px; position:fixed;  z-index:100}
+#top{ width:1200px; margin:0 auto;}
+.logo{ float:left; padding-top:13px; padding-right:206px;}
+/*导航*/
+.nav {float:left; padding-top:12px;}
+.nav .mainlevel { float:left; width:120px; line-height:60px; font-size:16px;/*IE6 only*/}
+.nav .mainlevel a {color:#333; text-decoration:none; display:block; padding:0 0px; width:120px; text-align:center;}
+.nav .mainlevel a:hover, nav .mainlevel a.active{color:#4b98ff; text-decoration:none;}
+
+.nav .mainlevel ul {display:none; position:absolute; padding-top:1px;}
+.nav .mainlevel li { background:rgba(255,255,255,0.9); line-height:38px; padding-bottom:2px; text-align:center; width:120px;/*IE6 only*/}
+.log {text-align:center; color:skyblue; line-height:24px; text-transform:capitalize; margin:50px auto;}
+
+.login{ float:right; line-height:62px; padding-top:10px; font-size:14px; color:#CCCCCC;}
+.login .button a{padding:3px 18px; background:#4b98ff; color:#fff; border-radius:4px;}
+.login .button a:hover{ background:#3a85e9; color:#fff;}
+.login a{color:#4b98ff; padding:0px 10px;}
+.login a:hover{color:#3a85e9;}
+.login1{ float:right; line-height:62px; padding-top:10px; font-size:14px; color:#4b98ff;}
+.login1 a{color:#4b98ff; padding:0px 10px;}
+.login1 a:hover{color:#3a85e9; text-decoration: underline;}
+
+/*内容*/
+.Content{background:url(../image/index_di.jpg) top center no-repeat; background-size: cover; -moz-background-size: cover;-webkit-background-size: cover; width: 100%;}
+.section{ position: relative;/**/ width:100%;min-height:630px; background:repeat-x; overflow: hidden;}
+.about{}
+.about .descript{ position:absolute; left:19%; margin-left:10px; top:450px; width:500px; height:250px; }
+.about .descshow{ position: absolute; left:71.4%; bottom:-100px; margin-left: -465px; overflow: hidden; width:930px; opacity: 1; filter:alpha(opacity:1);}
+.about .con{ width:1230px; height:auto; margin:0 auto; padding:16% 0px 0px 86px;}
+.about .con .left{ float:left;}
+.about .con .right{ float:right;}
+.about .con .button1{ width:140px; height:44px; background:#efdd21; color:#393400; font-size:20px; cursor:pointer; border:none; border-radius:8px; font-family:"微软雅黑"; margin:0px 37px 0px 38px;}
+.about .con .button1:hover{ background:#ffd800;}
+.about .con .button2{ width:140px; height:42px; color:#ffffff; background:none; font-size:20px; cursor:pointer; border:1px solid #6af6ff; border-radius:8px; font-family:"微软雅黑";}
+.about .con .button2:hover{ color:#6af6ff;}
+
+.ability{ height:100%;}
+.ability .con{ width:1200px; height:auto; margin:0 auto; padding-top:10%;}
+.ability .con .left{ width:398px; height:430px; border-right:1px solid #49a4cf;float:left; text-align:center; color:#fff;}
+.ability .con .left span{ display:block;}
+.ability .con .left .title{ font-size:20px; line-height:60px; padding-top:5px;}
+.ability .con .left .botoom{ width:299px; font-size:14px; line-height:34px; background:url(../image/index_two_4.png) 112px center no-repeat; text-align:left; padding-left:140px;}
+.ability .con .left .button{ width:160px; height:36px; border:1px dashed #fff; color:#fff; font-size:14px; text-align:center; background:none; margin-top:20px;cursor:pointer;}
+.ability .con .left .button:hover{ color:#6af6ff; border:1px dashed #6af6ff;}
+.ability .con .cont{width:398px; height:430px; border-right:1px solid #49a4cf;float:left;text-align:center; color:#fff;}
+.ability .con .cont span{ display:block;}
+.ability .con .cont .title{ font-size:20px; line-height:60px; padding-top:5px;}
+.ability .con .cont .botoom{ width:210px; font-size:14px; line-height:22px; background:url(../image/index_two_4.png) 67px 15px no-repeat; text-align:left; padding:6px 40px 0px 95px;}
+.ability .con .cont .button{ width:86px; height:24px; border:1px solid #fff; border-radius:3px; color:#fff; font-size:14px; background:none; margin:0px 0px 29px 133px;cursor:pointer;}
+.ability .con .cont .button:hover{ color:#6af6ff; border:1px solid #6af6ff;}
+.ability .con .right{ width:399px; float:left; text-align:center; color:#fff;}
+.ability .con .right span{ display:block;}
+.ability .con .right .title{ font-size:20px; line-height:60px; padding-top:5px;}
+.ability .con .right .botoom{ width:210px; font-size:14px; line-height:22px; background:url(../image/index_two_4.png) 80px 16px no-repeat; text-align:left; padding:6px 40px 0px 106px;}
+.ability .con .right p{ width:220px; font-size:14px;line-height:22px; text-align:left; padding:4px 0px 14px 107px;}
+
+
+.works{}
+.works .works-des{ position: absolute; left:50%; top:100px; margin-left: -500px ; width:1000px; height:80px;}
+.works-show-box{ position: absolute; left:50%; margin-left: -500px; bottom:-400px; width:1000px; height:400px;}
+.works-show{ /*width:1000px;*/ height:100%;}
+
+.ability,.contact{ position: relative;}
+.ability_bg{ position: absolute; left:-382px; top:100px;}
+.contact_bg{ position: absolute; right:-500px; bottom:-45px;}
+
+/*右侧按钮*/
+.dot{ height:165px; position: fixed; right:0; top:50%; margin-top:-82px;}
+.dot li{ position: relative; width:21px; height:21px; background: url(../image/dot.png); margin: 10px;}
+.dot li.active{ background-position: 0 -27px; }
+.dot li div{ position: absolute;right:21px; top:1px; width:0; height:21px; }
+.dot .dot-about{background: no-repeat;}
+.dot .dot-ability{background: no-repeat;}
+.dot .dot-works{background: no-repeat;}
+.dot .dot-contact{background: no-repeat;}
+
+
+.foot{ background: #1b2129; width: 100%; height: 50px; text-align: center; color: #999999; line-height: 50px; position:absolute; bottom: 0px;}

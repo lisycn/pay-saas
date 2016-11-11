@@ -1,0 +1,182 @@
+<!DOCTYPE html>  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8"/>
+    <title>云钱包运营网站</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/dist/css/AdminLTE.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/dist/css/skins/skin-blue-light.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css"/>
+    <link rel="stylesheet"
+          href="js/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/plugins/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
+
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon"/>
+	<!-- jQuery 2.2.3 -->
+	<script type="text/javascript" src="./jQuery/jquery-2.2.3.min.js"></script>
+	<script th:inline="javascript">
+	 $(document).ready(function(){ 
+		 
+		　　$(".validationCode_img").click(function(){ 
+			   now = new Date();
+		　　　　$(".validationCode_img").attr("src", "./create_ver_code?code="+now.getTime());  
+		　　}); 
+		
+		   $("#regBtn").click(function(){ 
+			   
+				var email = $("#email").val();
+			    var pwd = $("#pwd").val();
+			    var repwd =  $("#repwd").val();
+			    var valcode = $("#valcode").val();
+			    var msg = $("#msg");
+			    var checkpwd = /^[a-zA-Z0-9\u0000-\u00FF]{6,15}$/;
+
+			    if( jQuery.isEmptyObject(email) ){
+			    	msg.html('<font color="red">邮箱不能为空!</font>');
+			    	return false;
+			    }
+			    if( jQuery.isEmptyObject(pwd) ){
+			    	msg.html('<font color="red">密码不能为空!</font>');
+			    	return false;
+			    }
+			    if( jQuery.isEmptyObject(repwd) ){
+			    	msg.html('<font color="red">确认密码不能为空!</font>');
+			    	return false;;
+			    }
+			    if( jQuery.isEmptyObject(valcode) ){
+			    	msg.html('<font color="red">验证码不能为空!</font>');
+			    	return false;
+			    }
+			    if( !checkpwd.test(pwd) ){
+			    	msg.html('<font color="red">只允许大小写英文字母、数字和半角符号 6-15位!</font>');
+			    	return false;
+			    }
+			    if( pwd != repwd ){
+			    	msg.html('<font color="red">两次密码输入不一致!</font>');
+			    	return false;
+			    }
+			    if( $('#isBox').is(':checked') != true ){
+			    	msg.html('<font color="red">用户协议，请同意。</font>');
+			    	return false
+			    }
+			    
+			    $.ajax({
+				           cache: false,
+				           type: "POST",
+				           url:"./register",
+				           data:$('#reg_form').serialize(),
+				           dataType:'json',
+				           async: true,
+				           error: function(obj) {
+				           },
+				           success: function(data) {
+					           if( 'FAIL' == data.returnCode ){
+					        	   if( undefined == data.returnMsg ){
+					        		   $("#msg").html('<font color="red">发生异常,请联系管理员</font>');
+					        	   }else{
+					        		   $("#msg").html('<font color="red">'+data.returnMsg+'</font>');
+					        	   }
+					           }else{
+					        	   $("#isReg").val("S");
+					        	   location.href = "./regSuccess";
+					           }
+				          }
+				});
+		    	
+		    	if( $("#isReg").val() == 'F' ){
+		    		return false;
+		    	}
+			
+		   });
+	 }); 
+	</script>
+	<script th:inline="javascript">
+	function checkMail(){
+		var email = $("#email").val();
+		var msg = $("#msg");
+		$.ajax({
+	           cache: false,
+	           type: 'POST',
+	           url:'./check_email',
+	           data:'email='+email,
+	           async: false,
+	           error: function(obj) {
+	           },
+	           success: function(data) {
+	              if( data == 'false'){
+		             msg.html('<font color="red">该邮箱已经注册，不能使用!</font>');
+		             $("#email").val("");
+		             $("#email").focus();
+	              }
+	           }
+		});
+	}  
+	</script>
+	<style type="text/css">
+	  .checkbox{ vertical-align:middle; margin:auto 0px auto 20px;height:10px; padding:0px; float:left;}
+	</style>
+</head>
+<body class="hold-transition register-page" style="height: 700px" >
+<div class="register-box">
+    <div class="register-logo">
+		<a href="./website/index"><img src="image/201_42px.png" style="padding-bottom: 5px;" /></a>
+    </div>
+
+    <div class="register-box-body">
+        <p id="msg" class="login-box-msg">创建您的账号</p>
+
+        <form id="reg_form" method="post">
+            <input id="isReg" name="isReg" type="hidden" th:value="F" />
+            <div class="form-group has-feedback">
+                <input id="email" type="email" class="form-control" placeholder="请输入邮箱" name="email" maxlength="35" onblur="checkMail();" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+                <span></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input id="pwd" type="password" class="form-control" placeholder="请输入密码" name="pwd" maxlength="15" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+                <span></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input id="repwd" type="password" class="form-control" placeholder="重复密码" name="repwd" maxlength="15" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+                <span></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input id="valcode" type="text" class="form-control" placeholder="验证码" name="validationCode" maxlength="6" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+                <img class="validationCode_img" src="./create_ver_code" />
+            </div>
+            <div class="row">
+                <div class="col-xs-8" style="height:30px;display:none;">
+                    <div class="checkbox icheck" >
+                        <label>
+                        <input id="isBox"  class="checkbox" type="checkbox" checked="checked"/>
+                          <!-- <input id="isBox" class="checkbox" type="checkbox" checked="checked"/><a href="./user_agreement">用户协议</a> -->
+                        </label>
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-12">
+                    <button id="regBtn" type="submit" class="btn btn-primary btn-block btn-flat">注册</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+
+        <div class="social-auth-links text-center">
+        </div>
+        <a href="./logon_index" class="text-center" style="height: 20px">已有账号？ 登录</a>
+    </div>
+    <!-- /.form-box -->
+</div>
+</body>
+</html>

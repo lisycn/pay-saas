@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="css/index.css" rel="stylesheet"/>
+    <title>维金云支付</title>
+</head>
+
+<body>
+<div class="head">维金云商城</div>
+
+<div class="Pay_pc1">
+    <div class="left"><img id="bPic" src="image/pay_pc1_img1.png"></div>
+
+    <div class="right">
+        <div class="title">
+            <span>维金空气净化器家用除甲醛雾霾二手烟尘pm2.5卧室AC4374滤网</span>
+            <p>有效除甲醛 霾过敏原 微米过滤 新国标认证 除雾霾甲醛 智能双感应器 微米过滤 低速低噪音新国标之选 除雾霾甲醛 微米过滤 6种风速智能</p>
+        </div>
+
+        <div class="price">
+            <dl>
+                <dt>价格</dt>
+                <dd><span class="po1">￥<span class="po2">5299.00</span></span></dd>
+            </dl>
+            <dl>
+                <dt style="line-height:30px">促销价</dt>
+                <dd><span class="po3">￥<span class="po4">0.01</span></span>
+                    <font class="po5">（仅为DEMO体验支付流程，非真实购买）</font></dd>
+            </dl>
+
+        </div>
+        <div class="three">
+            <dl>
+                <dt>颜色</dt>
+                <dd>
+                    <div class="color">
+                        <a id="img1" class="active" href="#"><img src="image/pay_pc1_2.png"
+                                                                  onclick="changeImg('img1','img2')"></a>
+                        <a id="img2" href="#"><img src="image/pay_pc1_3.png" onclick="changeImg('img2', 'img1')"></a>
+                    </div>
+                </dd>
+            </dl>
+            <dl>
+                <dt>数量</dt>
+                <dd>
+                <span class="number">
+                  <a id="number1" class="number01"></a>
+                  <input id="num" type="text" class="button" value="1"/>
+                  <a id="number2" class="number2"></a>
+                </span>
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <input type="button" class="button1" id="btnBuy" value="立即购买" onclick="javascript:location='payPc2'">
+        </div>
+
+    </div>
+</div>
+
+<script type='text/javascript' src='js/jquery-1.12.1.min.js'></script>
+<script type="text/javascript">
+
+    $("#btnBuy").bind("click", function () {
+        window.location = "payPc2?num=" + $("#num").val() + "&instOrderNo=" + generateInstOrderNo();
+    });
+
+    $("#num").bind("keyup", function () {
+        var num = $("#num").val();
+        var type = /^[1-9][\d]*$/;
+        var re = new RegExp(type);
+        var numVal = num.match(re);
+        if (!numVal) {
+            $("#num").val(1);
+        } else if (numVal > 199) {
+            $("#num").val(199);
+        }
+    });
+
+    $("#number1").bind("click", function () {
+        var num = parseInt($("#num").val()) - 1;
+        if (num < 1) num = 1;
+        $("#num").val(num);
+    });
+
+    $("#number2").bind("click", function () {
+        var num = parseInt($("#num").val()) + 1;
+        if (num > 199) num = 199
+        $("#num").val(num);
+    });
+
+    function generateInstOrderNo() {
+        var date = new Date().getTime();
+        return "WJTest" + date;
+    }
+
+    function changeImg(imgId1, imgId2) {
+        $("#" + imgId1).addClass("active");
+        $("#" + imgId2).removeClass("active");
+        $("#bPic").attr("src", "image/pay_pc1_" + imgId1 + ".png");
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,618 @@
+<h2 class="page-header">应用管理</h2>
+<div class="content" ng-controller="pManagerController">
+    <!-- Custom Tabs -->
+    <ul class="nav nav-tabs">
+        <li id="basic_tab" class="active"><a href="#tab_1" data-toggle="tab">基本信息设置</a></li>
+        <li id="channel_tab"><a href="#tab_2" data-toggle="tab">支付渠道设置</a></li>
+        <li id="webhook_tab" style="display: none"><a href="#tab_3" data-toggle="tab">webhooks设置</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">应用名</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" placeholder="请输入应用名称"
+                                       ng-model="appName" value="{{appName}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="desc" class="col-sm-2 control-label">应用描述</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="desc" placeholder="请输入应用描述"
+                                       ng-model="appDesc" value="{{appDesc}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="appKey" class="col-sm-2 control-label">APP KEY</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="appKey" placeholder="10000"
+                                       ng-model="appKey" value="{{appKey}}" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="appSecret" class="col-sm-2 control-label">APP SECRET</label>
+
+                            <div class="col-sm-10">
+                                <!--<input type="text" class="form-control" id="appSecret"-->
+                                       <!--placeholder="您的应用公钥" ng-model="appSecret" value="{{appSecret}}" disabled>-->
+                                <textarea id="appSecret" class="form-control" placeholder="您的应用公钥" ng-model="appSecret" value="{{appSecret}}" readonly style="cursor: not-allowed; background-color: #eee;"></textarea>
+                                <button class="pull-right btn btn-default data-tip" id="btnCopy"
+                                        data-tip="{{copyStatus}}" ng-click="copyToClipboard('appSecret');" ng-mouseover="btnCopyMouseover();">复制</button>
+                                <!--
+                                <td>
+                                    <div class="btn-toggle ng-isolate-scope off data-tip on" data-tip="{{aliAppTip}}"
+                                         ng-class="{on:ali_app_state,off:!ali_app_state}" ng-click="ali_app_toggle();"
+                                         btn-toggle="">
+                                         <i></i>
+                                        <span class="on"></span><span class="off"></span>
+                                    </div>
+                                </td>
+                                -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-success pull-right" ng-click="to_update_product()">保存
+                        </button>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+        </div>
+        <!-- /.tab-pane -->
+        <div class="tab-pane" id="tab_2">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title"></h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover text-center">
+                        <tbody>
+                        <tr>
+                            <th>支付渠道</th>
+                            <th>支付服务</th>
+                            <th>渠道编码</th>
+                            <th>使用范围</th>
+                            <th>设置</th>
+                            <th>状态</th>
+                        </tr>
+                        <tr>
+                            <td>支付宝</td>
+                            <td>及时到账</td>
+                            <td>ALIPAY</td>
+                            <td><span class="label label-success">PC网页</span></td>
+                            <td>
+                                <a class="btn btn-app" data-toggle="modal" data-target="#modal_ali_direct">
+                                    <i class="fa fa-edit"></i>设置
+                                </a>
+                            </td>
+                            <td>
+                                <div class="btn-toggle ng-isolate-scope off data-tip on" data-tip="{{aliDirectTip}}"
+                                     ng-class="{on:ali_direct_state,off:!ali_direct_state}"
+                                     ng-click="ali_direct_toggle();" btn-toggle=""><i></i><span
+                                        class="on"></span><span class="off"></span></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>支付宝</td>
+                            <td>APP支付</td>
+                            <td>ALIAPPPAY</td>
+                            <td><span class="label label-success">移动支付</span></td>
+                            <td>
+                                <a class="btn btn-app" data-toggle="modal" data-target="#modal_ali_app">
+                                    <i class="fa fa-edit"></i>设置
+                                </a>
+                            </td>
+                            <td>
+                                <div class="btn-toggle ng-isolate-scope off data-tip on" data-tip="{{aliAppTip}}"
+                                     ng-class="{on:ali_app_state,off:!ali_app_state}" ng-click="ali_app_toggle();"
+                                     btn-toggle=""><i></i><span
+                                        class="on"></span><span class="off"></span></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>微信支付</td>
+                            <td>扫码支付</td>
+                            <td>WXPAY</td>
+                            <td><span class="label label-success">扫码支付</span></td>
+                            <td>
+                                <a class="btn btn-app" data-toggle="modal" data-target="#modal_wx_scan">
+                                    <i class="fa fa-edit"></i>设置
+                                </a>
+                            </td>
+                            <td>
+                                <div class="btn-toggle ng-isolate-scope off data-tip on" data-tip="{{wxScanTip}}"
+                                     ng-class="{on:wx_scan_state,off:!wx_scan_state}" ng-click="wx_scan_toggle();"
+                                     btn-toggle=""><i></i><span
+                                        class="on"></span><span class="off"></span></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>微信支付</td>
+                            <td>APP支付</td>
+                            <td>WXAPPPAY</td>
+                            <td><span class="label label-success">移动支付</span></td>
+                            <td>
+                                <a class="btn btn-app" data-toggle="modal" data-target="#modal_wx_app">
+                                    <i class="fa fa-edit"></i>设置
+                                </a>
+                            </td>
+                            <td>
+                                <div class="btn-toggle ng-isolate-scope off data-tip on" data-tip="{{wxAppTip}}"
+                                     ng-class="{on:wx_app_state,off:!wx_app_state}" ng-click="wx_app_toggle();"
+                                     btn-toggle=""><i></i><span
+                                        class="on"></span><span class="off"></span></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>银联支付</td>
+                            <td>网页支付</td>
+                            <td>UNIONPAY</td>
+                            <td>
+                                <span class="label label-success">PC网页</span>
+                                <span class="label label-success">移动APP</span>
+                            </td>
+                            <td>
+                                <a class="btn btn-app" data-toggle="modal" data-target="#modal_union">
+                                    <i class="fa fa-edit"></i>设置
+                                </a>
+                            </td>
+                            <td>
+                                <div class="btn-toggle ng-isolate-scope off data-tip on" data-tip="{{unionTip}}"
+                                     ng-class="{on:union_state,off:!union_state}" ng-click="union_toggle();"
+                                     btn-toggle=""><i></i><span
+                                        class="on"></span><span class="off"></span></div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- /.box-body -->
+                <!--model开始-->
+                <!--支付宝即时到账开始 -->
+                <div class="modal" id="modal_ali_direct">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">×</span>
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>-->
+                                <h4 class="modal-title">支付宝 即时到账</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal">
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label for="partnerID_direct"
+                                                   class="col-sm-2 control-label">partnerID</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="partnerID_direct"
+                                                       placeholder="请输入您的支付宝partner" ng-model="ali_direct_pId">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="MD5_direct" class="col-sm-2 control-label">MD5</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="MD5_direct"
+                                                       placeholder="请输入您的支付宝MD5" ng-model="ali_direct_md5">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="RSA_PUBLIC_direct" class="col-sm-2 control-label">RSA公钥</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="RSA_PUBLIC_direct"
+                                                       placeholder="请输入您的支付宝RSA公钥" ng-model="ali_direct_rsa_pub">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="RSA_PRIVATE_direct" class="col-sm-2 control-label">RSA私钥</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="RSA_PRIVATE_direct"
+                                                       placeholder="请输入您的支付宝RSA私钥" ng-model="ali_direct_rsa_pri">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" ng-model="ali_direct_open_status">开通
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" ng-click="add_ali_direct();">确认</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!--支付宝即时到账结束 -->
+                <!--支付宝App支付开始 -->
+                <div class="modal" id="modal_ali_app">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                               <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>-->
+                                <h4 class="modal-title">支付宝 APP支付</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal">
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label for="partnerID_app" class="col-sm-2 control-label">partnerID</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="partnerID_app"
+                                                       placeholder="请输入您的支付宝partner" ng-model="ali_app_pId">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="MD5_app" class="col-sm-2 control-label">MD5</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="MD5_app"
+                                                       placeholder="请输入您的支付宝MD5" ng-model="ali_app_md5">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="RSA_PUBLIC_app" class="col-sm-2 control-label">RSA公钥</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="RSA_PUBLIC_app"
+                                                       placeholder="请输入您的支付宝RSA公钥" ng-model="ali_app_rsa_pub">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="RSA_PRIVATE_app" class="col-sm-2 control-label">RSA私钥</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="RSA_PRIVATE_app"
+                                                       placeholder="请输入您的支付宝RSA私钥" ng-model="ali_app_rsa_pri">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" ng-model="ali_app_open_status" checked="checked" >开通
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" ng-click="add_ali_app();">确认</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!--支付宝App支付结束 -->
+                <!--微信扫码支付开始 -->
+                <div class="modal" id="modal_wx_scan">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>-->
+                                <h4 class="modal-title">微信 扫码支付</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal">
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label for="mchID_scan" class="col-sm-2 control-label">商户号</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="mchID_scan"
+                                                       placeholder="请输入您的微信扫码支付商户号" ng-model="wx_scan_mchId">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="APPID_scan" class="col-sm-2 control-label">APPID</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="APPID_scan"
+                                                       placeholder="请输入您的微信扫码支付APPID" ng-model="wx_scan_appId">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="API_key_scan" class="col-sm-2 control-label">API密钥</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="API_key_scan"
+                                                       placeholder="请输入您的微信扫码支付API密钥" ng-model="wx_scan_apiKey">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Appsecret_scan" class="col-sm-2 control-label">Appsecret</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="Appsecret_scan"
+                                                       placeholder="请输入您的微信扫码支付Appsecret" ng-model="wx_scan_apiSecretPassword">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">API证书</label>
+
+                                            <div class="col-sm-10">
+                                                    <button type="button" class="btn btn-default btn-sm" ngf-select="uploadWxScan($file)">上传文件</button>
+                                                    <div class="progress progress-xs">
+                                                        <div id="wx_scan_progress" class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                                            <span class="sr-only">60% Complete (warning)</span>
+                                                        </div>
+                                                    </div>
+                                                     <p class="help-block">请上传微信扫码支付api证书(以.p12结尾)</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" ng-model="wx_scan_open_status">开通
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" ng-click="add_wx_scan();">确认</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!--微信扫码支付结束 -->
+                <!--微信App支付开始 -->
+                <div class="modal" id="modal_wx_app">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>-->
+                                <h4 class="modal-title">微信 App支付</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal">
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label for="mchID_app" class="col-sm-2 control-label">商户号</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="mchID_app"
+                                                       placeholder="请输入您的微信扫码支付商户号" ng-model="wx_app_mchId">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="APPID_app" class="col-sm-2 control-label">APPID</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="APPID_app"
+                                                       placeholder="请输入您的微信扫码支付APPID" ng-model="wx_app_appId">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="API_key_app" class="col-sm-2 control-label">API密钥</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="API_key_app"
+                                                       placeholder="请输入您的微信扫码支付API密钥" ng-model="wx_app_apiKey">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Appsecret_app" class="col-sm-2 control-label">Appsecret</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="Appsecret_app"
+                                                       placeholder="请输入您的微信扫码支付Appsecret" ng-model="wx_app_apiSecretPassword">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">API证书</label>
+
+                                            <div class="col-sm-10">
+                                                <button type="button" class="btn btn-default btn-sm" ngf-select="uploadWxApp($file)">上传文件</button>
+                                                <div class="progress progress-xs">
+                                                    <div id="wx_app_progress" class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">60% Complete (warning)</span>
+                                                    </div>
+                                                </div>
+                                                <p class="help-block">请上传微信扫码支付api证书(以.p12结尾)</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" ng-model="wx_app_open_status">开通
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" ng-click="add_wx_app();">确认</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!--微信App支付结束 -->
+                <!--银联支付开始 -->
+                <div class="modal" id="modal_union">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>-->
+                                <h4 class="modal-title">银联 网页支付 APP支付</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal">
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label for="merID" class="col-sm-2 control-label">商户号</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="merID"
+                                                       placeholder="请输入您的银联支付商户号" ng-model="union_mchId">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cert_password" class="col-sm-2 control-label">证书密码</label>
+
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="cert_password"
+                                                       placeholder="请输入您的银联支付的证书密码" ng-model="union_certPassword">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label  class="col-sm-2 control-label">pfx证书</label>
+                                            <div class="col-sm-10">
+                                                <button type="button" class="btn btn-default btn-sm" ngf-select="uploadUnion($file)">上传文件</button>
+                                                <div class="progress progress-xs">
+                                                    <div id="union_progress" class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">60% Complete (warning)</span>
+                                                    </div>
+                                                </div>
+                                                <p class="help-block">请上传银联支付的pfx证书(以.pfx结尾)</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox" ng-model="union_open_status">开通
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" ng-click="add_union();">确认</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!--银联支付结束 -->
+                <!--model结束-->
+                <!-- alert model开始-->
+                <div class="modal " id="modal_alert">
+                    <div class="modal-dialog">
+                        <div class="modal-content ">
+                            <div class="modal-header">
+                               <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close" > 
+                                       <span aria-hidden="true">×</span>
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>-->
+                                <h4 class="modal-title">{{alertTitle}}</h4>
+                            </div>
+                            <div class="modal-body text-center">
+                                <div>
+                                    <!--<h4><i class="icon fa fa-info"></i> Alert!</h4>-->
+                                    <h3>{{alertMessage}}</h3>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">确认</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- alert model结束-->
+            </div>
+        </div>
+        <!-- /.tab-pane -->
+        <div class="tab-pane" id="tab_3">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="online" class="col-sm-2 control-label">
+                                生产环境webhook
+                                <p>(应用状态为上线时)</p>
+                            </label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="online" placeholder="请用http://或者https://开头">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="test" class="col-sm-2 control-label">
+                                测试环境webhook
+                                <p>(应用状态为测试时)</p>
+                            </label>
+
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="test" placeholder="请用http://或者https://开头">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-info pull-right">保存</button>
+                        <button type="submit" class="btn btn-default ">取消</button>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+        </div>
+        <!-- /.tab-pane -->
+    </div>
+    <!-- /.tab-content -->
+    <!-- nav-tabs-custom -->
+</div>

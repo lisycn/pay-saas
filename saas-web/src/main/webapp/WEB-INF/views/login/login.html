@@ -1,0 +1,160 @@
+<!DOCTYPE html>  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"  
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head >
+    <meta charset="UTF-8" />
+    <title>云钱包运营网站</title>
+    <meta
+            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+            name="viewport" />
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/dist/css/AdminLTE.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/dist/css/skins/skin-blue-light.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker-standalone.css"/>
+    <link rel="stylesheet"
+          href="js/lib/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/plugins/daterangepicker/daterangepicker.css"/>
+    <link rel="stylesheet"
+          href="js/lib/AdminLTE/plugins/datatables/dataTables.bootstrap.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon"/>
+    <script src="./jQuery/jquery-2.2.3.min.js">
+    </script>
+    <script th:inline="javascript">
+    	 $(document).ready(function(){ 
+    		 
+  		   if( $("#loginNum").val() >= 3 ){
+			   $("#verifycode").show();
+		   } 
+    		 
+		　　$(".validationCode_img").click(function(){ 
+			   now = new Date();
+		　　　　$(".validationCode_img").attr("src", "./create_ver_code?code="+now.getTime());  
+		　　}); 
+		   
+		   $("#loginBtn").click(function(){ 
+			   
+			    var email = $("#email").val();
+			    var pwd = $("#pwd").val();
+			    var valcode = $("#valcode");
+			    var msg = $("#msg");
+			    if( jQuery.isEmptyObject(email) ){
+			    	msg.html('<font color="red">邮箱不能为空!</font>');
+			    	return false;
+			    }
+			    if( jQuery.isEmptyObject(pwd) ){
+			    	msg.html('<font color="red">密码不能为空!</font>');
+			    	return false;
+			    }
+			    if( $("#loginNum").val() >= 3 ){
+			        if( jQuery.isEmptyObject(valcode.val()) ){
+			        	msg.html('<font color="red">验证码不能为空!</font>');
+			        	return false;
+			        }
+			    }
+			    	
+		    	$.ajax({
+					           cache: false,
+					           type: "POST",
+					           url:"./logon_from",
+					           data:$('#login_form').serialize(),
+					           dataType:'json',
+					           async: true,
+					           error: function(obj) {
+					           },
+					           success: function(data) {
+						           if( 'FAIL' == data.returnCode ){
+						        	   if( undefined == data.returnMsg ){
+						        		   $("#msg").html('<font color="red">发生异常,请联系管理员</font>');
+						        	   }else{
+						        		   $("#msg").html('<font color="red">'+data.returnMsg+'</font>');
+						        	   }
+						      		   if( data.loginNum >= 3 ){
+						      			   $("#loginNum").val(data.loginNum);
+						    			   $("#verifycode").show();
+						    		   } 
+						           }else{
+						        	   $("#isLogin").val("S");
+						        	   location.href = "/saas-web/website/index";
+						           }
+					          }
+				});
+		    	
+		    	if( $("#isLogin").val() == 'F' ){
+		    		return false;
+		    	}
+			    
+		   });
+		   
+	     });
+    </script>
+    <script th:inline="javascript">
+		function showDiv( type ){
+		   		 
+	   		 if( type == 1 ){
+	   			 $("#loginId").hide();
+	   		 }else if( type == 2 ){
+	   			 $("#loginId").show();
+	   		 }
+		   		 
+		}
+    </script>
+    <script th:inline="javascript">
+     function notSpace(){
+    	 var email = $("#email").val();
+    	 $("#email").val(email.replace(/\ +/g,""));
+     }
+    </script>
+</head>
+<body class="hold-transition login-page" style="height: 700px" >
+<div class="login-box" id="loginId">
+    <div class="login-logo">
+        <a href="./website/index"><img src="image/201_42px.png" style="padding-bottom: 5px;" /></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+        <p id="msg" class="login-box-msg">欢迎回来</p>
+
+        <form id="login_form" method="post">
+            <input id="isLogin" name="isLogin" type="hidden" th:value="F" />
+            <input id="loginNum" name="loginNum" type="hidden" th:value="${loginNum}" />
+            <div class="form-group has-feedback">
+                <input id="email" type="email" class="form-control" placeholder="请输入邮箱" name="email" maxlength="35" onblur="notSpace();" />
+                <span></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input id="pwd" type="password" class="form-control" placeholder="请输入密码" name="pwd" maxlength="15" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+                <span></span>
+            </div>
+            <div id="verifycode" class="form-group has-feedback" style='display: none;'>
+                <input id="valcode" type="text" class="form-control" placeholder="验证码" name="validationCode" maxlength="6" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+                <img class="validationCode_img" src="./create_ver_code" />
+            </div>
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-xs-12">
+                    <button id="loginBtn" type="submit" class="btn btn-primary btn-block btn-flat">登 录</button>
+                </div>
+            </div>
+        </form>
+        
+        <div class="social-auth-links text-center">
+        </div>
+        
+        <a href="./register_index" class="text-center">注册账号</a>
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- <a href="javascript:showDiv('1');" class="text-center" >隐藏</a>
+<a href="javascript:showDiv('2');" class="text-center" >显示</a> -->
+<!-- /.login-box -->
+
+</body>
+</html>
